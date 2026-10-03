@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rezervace servisu | PICSTOP</title>
+<meta name="description" content="Online rezervace servisu kola v cykloservisu PICSTOP, Praha 6.">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;1,700;1,800&family=Barlow:ital,wght@0,400;0,500;0,600;1,800;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-booking">
+
+<header id="top" class="scrolled">
+  <div class="wrap nav">
+    <a href="index.html" class="logo" aria-label="PICSTOP – úvod">
+      <img src="img/logo.png" alt="" width="44" height="44">
+      <span class="logo-text">PICSTOP</span>
+    </a>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <ul class="menu">
+      <li><a href="index.html#servis">Servis</a></li>
+      <li><a href="index.html#zavody">Závody</a></li>
+      <li><a href="index.html#cenik">Ceník</a></li>
+      <li><a href="index.html#test">Test centrum</a></li>
+      <li><a href="index.html#o-nas">O nás</a></li>
+      <li><a href="https://www.picstop-shop.cz" target="_blank" rel="noopener">E-shop</a></li>
+      <li><a href="index.html#kontakt">Kontakt</a></li>
+      <li><a href="rezervace.html" class="btn btn-red" aria-current="page">Rezervace</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="booking">
+  <div class="wrap">
+    <div class="kicker">Online rezervace</div>
+    <h1>Rezervace servisu</h1>
+    <span class="bar"></span>
+    <p class="booking-lead">Vyber si termín, kdy kolo přivezeš. Na místě s tebou projdeme, co je potřeba, a domluvíme cenu dopředu.</p>
+
+    <div class="demo-note" id="demo-note" hidden>Ukázková verze: rezervace se zatím nikam neukládá ani neodesílá.</div>
+
+    <ol class="steps" aria-label="Kroky rezervace">
+      <li data-step="1" class="active">1. Servis</li>
+      <li data-step="2">2. Termín</li>
+      <li data-step="3">3. Detaily</li>
+      <li data-step="4">4. Potvrdit</li>
+    </ol>
+
+    <!-- 1: service -->
+    <section class="step-panel active" data-panel="1">
+      <h2 class="step-title">Co potřebuješ?</h2>
+      <div class="services" role="radiogroup" aria-label="Služba">
+        <label class="service"><input type="radio" name="service" value="Servis kola" checked><span><b>Servis kola</b>Kontrola, seřízení, opravy i generálka. Účtujeme v hodinovce 1 320 Kč.</span></label>
+        <label class="service"><input type="radio" name="service" value="Servis odpružení"><span><b>Servis odpružení</b>Vidlice a tlumiče FOX, RockShox, Marzocchi za pevnou cenu.</span></label>
+        <label class="service"><input type="radio" name="service" value="Jiné"><span><b>Jiné</b>Stavba kola, test centrum, příprava na závod. Popiš to ve zprávě.</span></label>
+      </div>
+      <div class="step-actions"><span></span><button class="btn btn-red" data-next>Pokračovat</button></div>
+    </section>
+
+    <!-- 2: date + time -->
+    <section class="step-panel" data-panel="2">
+      <h2 class="step-title">Kdy kolo přivezeš?</h2>
+      <div class="picker">
+        <div class="calendar">
+          <div class="cal-head">
+            <button class="cal-nav" id="cal-prev" aria-label="Předchozí měsíc">‹</button>
+            <span id="cal-month"></span>
+            <button class="cal-nav" id="cal-next" aria-label="Další měsíc">›</button>
+          </div>
+          <div class="cal-grid cal-dow"><span>Po</span><span>Út</span><span>St</span><span>Čt</span><span>Pá</span><span>So</span><span>Ne</span></div>
+          <div class="cal-grid" id="cal-days"></div>
+        </div>
+        <div class="slots">
+          <div class="slots-head" id="slots-head">Vyber den</div>
+          <div class="slot-list" id="slot-list"></div>
+          <p class="slots-hint">Přeškrtnuté časy jsou obsazené. Sobota a neděle zavřeno.</p>
+        </div>
+      </div>
+      <div class="step-actions"><button class="btn btn-line" data-back>Zpět</button><button class="btn btn-red" data-next id="to-details" disabled>Pokračovat</button></div>
+    </section>
+
+    <!-- 3: details -->
+    <section class="step-panel" data-panel="3">
+      <h2 class="step-title">Tvoje údaje</h2>
+      <form class="details" id="details" novalidate>
+        <label>Celé jméno<input name="name" autocomplete="name" required></label>
+        <label>Telefon<input name="phone" type="tel" autocomplete="tel" placeholder="+420 " required></label>
+        <label>E-mail<input name="email" type="email" autocomplete="email" required></label>
+        <label>Kolo<input name="bike" placeholder="např. Trek Supercaliber, Canyon Speedmax"></label>
+        <label class="full">Co je potřeba udělat?<textarea name="message" rows="4"></textarea></label>
+        <label class="consent full"><input type="checkbox" name="consent" required> Souhlasím se zpracováním osobních údajů pro účely rezervace.</label>
+      </form>
+      <div class="step-actions"><button class="btn btn-line" data-back>Zpět</button><button class="btn btn-red" data-next id="to-confirm">Pokračovat</button></div>
+    </section>
+
+    <!-- 4: confirm -->
+    <section class="step-panel" data-panel="4">
+      <h2 class="step-title">Zkontroluj rezervaci</h2>
+      <dl class="summary" id="summary"></dl>
+      <div class="step-actions"><button class="btn btn-line" data-back>Zpět</button><button class="btn btn-red" id="submit">Odeslat rezervaci</button></div>
+    </section>
+
+    <!-- done -->
+    <section class="step-panel" data-panel="done">
+      <div class="done">
+        <h2>Hotovo, těšíme se!</h2>
+        <span class="bar"></span>
+        <p id="done-text"></p>
+        <a href="index.html" class="btn btn-line">Zpět na web</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> PICSTOP – cykloservis pro náročné</span>
+    <span><a href="https://www.picstop.cz/kontakty/reklamace/">Reklamace</a><a href="https://www.picstop.cz/kontakty/ochrana-osobnich-udaju/">Ochrana osobních údajů</a></span>
+    <p class="made">Web vytvořil <a href="mailto:patrik.fanta@gmail.com">Patrik Fanta</a></p>
+  </div>
+</footer>
+
+<script src="js/rezervace.js"></script>
+</body>
+</html>
