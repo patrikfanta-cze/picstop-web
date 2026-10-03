@@ -362,3 +362,18 @@ footer .made a{margin:0;color:var(--white);text-decoration:underline;text-decora
   .member-solo .photo{min-height:0;aspect-ratio:4/5}
   .member-solo .member-body{padding:28px 22px}
 }
+
+/* workshop & shop mosaic */
+.shop{padding-bottom:40px}
+.mosaic{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:4px}
+.mosaic figure{margin:0;overflow:hidden;background:var(--panel)}
+.mosaic img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.mosaic figure:hover img{transform:scale(1.04)}
+.mosaic .m-big{grid-column:span 2;grid-row:span 2}
+.mosaic .m-wide{grid-column:span 2}
+.storefront{margin-top:28px;width:100%;aspect-ratio:4/3;object-fit:cover;border-bottom:5px solid var(--red)}
+@media (max-width:700px){
+  .mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}
+  .mosaic .m-big,.mosaic .m-wide{grid-column:span 2}
+  .mosaic .m-big{grid-row:span 2}
+}
