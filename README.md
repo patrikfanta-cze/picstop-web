@@ -8,4 +8,4 @@ Fotky jsou ve složce `img/` (zdroj: picstop.cz a Instagram @picstop_cz; noční
 
 Fotky z Instagramu mají jen 640 px – pro ostřejší web je vyměň za originály se stejným názvem.
 
-Logo v hlavičce je zatím jen přibližná SVG kresba (`<symbol id="mark">` v `index.html`) – nahradit oficiálním souborem.
+Logo (`img/logo.png`) je profilovka z Instagramu @picstop_cz.
