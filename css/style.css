@@ -288,7 +288,7 @@ footer .made a{margin:0;color:var(--white);text-decoration:underline;text-decora
 .step-actions .btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
 .btn{cursor:pointer;font-size:1.2rem}
 
-.services{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.service-choice{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
 .service{background:var(--panel);padding:24px;cursor:pointer;display:flex;gap:14px;border-top:5px solid transparent;transition:border-color .15s, background .15s}
 .service:hover{background:var(--panel-2)}
 .service:has(input:checked){border-color:var(--red);background:var(--panel-2)}
@@ -338,7 +338,7 @@ footer .made a{margin:0;color:var(--white);text-decoration:underline;text-decora
 .done p{color:#cfcfd2;max-width:620px;margin-bottom:28px;font-size:1.1rem}
 
 @media (max-width:860px){
-  .services,.picker{grid-template-columns:1fr}
+  .service-choice,.picker{grid-template-columns:1fr}
   .details{grid-template-columns:1fr;padding:20px}
   .steps li{font-size:.85rem}
 }
