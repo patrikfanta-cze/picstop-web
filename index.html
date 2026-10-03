@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PICSTOP – cykloservis pro náročné | Praha 6</title>
+<meta name="description" content="Cykloservis PICSTOP v Praze 6. Servis silničních, horských i triatlonových kol, certifikovaný servis odpružení FOX, RockShox a Marzocchi. Testovací centrum kol, sedel a brašen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,800;1,800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --asphalt:#141619;
+  --asphalt-2:#1d2024;
+  --line:#2c3036;
+  --chalk:#f4f2ee;
+  --paper:#ffffff;
+  --ink:#16181b;
+  --muted:#6b7078;
+  --muted-dark:#a3a8b0;
+  --red:#e2231a;
+  --sky:#6ec1e4;
+  --amber:#fcaf3b;
+  --display:"Barlow Condensed", "Arial Narrow", sans-serif;
+  --body:"Barlow", system-ui, sans-serif;
+  --wrap:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);font-size:17px;line-height:1.6;color:var(--ink);background:var(--chalk);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);text-transform:uppercase;line-height:.95;letter-spacing:.01em}
+h2{font-size:clamp(2.4rem,5vw,4rem);font-weight:800}
+h3{font-size:1.6rem;font-weight:800}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:.95rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.eyebrow::before{content:"";width:28px;height:3px;background:currentColor}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.15rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;padding:14px 26px;border:2px solid transparent;transition:transform .15s, background .15s, color .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-amber{background:var(--amber);color:var(--asphalt)}
+.btn-ghost{border-color:currentColor;color:var(--chalk)}
+.btn-ghost:hover{background:var(--chalk);color:var(--asphalt)}
+
+/* photo slots: drop files into /img and they appear; until then a labelled placeholder shows */
+.photo{position:relative;background:repeating-linear-gradient(135deg,#23262b 0 14px,#1d2024 14px 28px);overflow:hidden}
+.photo::after{content:attr(data-label);position:absolute;inset:auto 12px 12px auto;font:600 .75rem var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-dark);background:rgba(0,0,0,.45);padding:4px 8px}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.photo.light{background:repeating-linear-gradient(135deg,#e6e3dd 0 14px,#ecE9e4 14px 28px)}
+.photo.light::after{color:var(--muted);background:rgba(255,255,255,.7)}
+
+/* header */
+header{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .25s, box-shadow .25s}
+header.scrolled{background:rgba(20,22,25,.96);box-shadow:0 1px 0 var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:76px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--chalk)}
+.logo-mark{width:34px;height:34px;border-radius:50%;border:4px solid var(--red);position:relative}
+.logo-mark::after{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--red)}
+.logo-text{font-family:var(--display);font-weight:800;font-size:1.9rem;font-style:italic;letter-spacing:.02em}
+.logo-text b{color:var(--red);font-weight:800}
+.menu{display:flex;align-items:center;gap:28px;list-style:none}
+.menu a{text-decoration:none;color:var(--chalk);font-family:var(--display);font-weight:600;font-size:1.1rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.menu a:hover{opacity:1;color:var(--sky)}
+.menu .btn{padding:10px 18px;opacity:1}
+.menu .btn:hover{color:var(--asphalt)}
+.burger{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer}
+.burger span{display:block;height:3px;background:var(--chalk);margin:7px 8px;transition:.2s}
+
+/* hero */
+.hero{position:relative;min-height:100vh;min-height:100svh;background:var(--asphalt);color:var(--chalk);display:flex;align-items:flex-end;overflow:hidden}
+.hero .photo{position:absolute;inset:0}
+.hero .photo::before{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(20,22,25,.55) 0%,rgba(20,22,25,.2) 35%,rgba(20,22,25,.92) 100%)}
+.hero .photo::after{top:96px;bottom:auto;z-index:3}
+.hero-inner{position:relative;z-index:5;padding-bottom:72px;padding-top:140px;width:100%}
+.hero h1{font-size:clamp(3.6rem,11vw,9.5rem);font-weight:800;font-style:italic;max-width:11ch}
+.hero h1 em{color:var(--amber);font-style:italic}
+.hero p.lead{max-width:560px;margin:24px 0 34px;font-size:1.15rem;color:#d9dbde}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px}
+.status{display:inline-flex;align-items:center;gap:10px;margin-bottom:26px;font-size:.95rem;font-weight:500;background:rgba(255,255,255,.08);padding:6px 14px 6px 10px;border-radius:99px}
+.status i{width:10px;height:10px;border-radius:50%;background:var(--muted-dark)}
+.status.open i{background:#46d36b;box-shadow:0 0 0 4px rgba(70,211,107,.25)}
+.brands{display:flex;flex-wrap:wrap;gap:10px 32px;margin-top:56px;padding-top:24px;border-top:1px solid rgba(255,255,255,.15);font-family:var(--display);font-weight:800;font-size:1.3rem;letter-spacing:.1em;color:#8d929a;text-transform:uppercase}
+.brands span:first-child{color:var(--sky);font-weight:600;font-size:.95rem;letter-spacing:.18em;align-self:center}
+
+/* pillars */
+.pillars{background:var(--red);color:#fff}
+.pillars .wrap{display:grid;grid-template-columns:repeat(3,1fr)}
+.pillar{padding:36px 28px;border-left:1px solid rgba(255,255,255,.25)}
+.pillar:first-child{border-left:0;padding-left:0}
+.pillar h3{font-size:1.9rem;margin-bottom:6px}
+.pillar p{opacity:.92}
+
+section{padding:110px 0}
+
+/* intro */
+.intro .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:72px;align-items:center}
+.intro .photo{aspect-ratio:4/5}
+.intro p{margin-top:22px;color:#3b3f45;font-size:1.08rem}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.tags span{font-family:var(--display);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:1rem;border:2px solid var(--ink);padding:4px 12px}
+
+/* services */
+.services{background:var(--paper)}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:56px;flex-wrap:wrap}
+.section-head p{max-width:440px;color:var(--muted)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.svc{background:var(--chalk);display:flex;flex-direction:column}
+.svc .photo{aspect-ratio:3/2}
+.svc-body{padding:28px 28px 32px;flex:1;display:flex;flex-direction:column}
+.svc-num{font-family:var(--display);font-weight:800;font-size:1rem;color:var(--red);letter-spacing:.1em;margin-bottom:6px}
+.svc h3{margin-bottom:12px}
+.svc p{color:#3b3f45}
+.svc ul{list-style:none;margin-top:16px;font-size:.95rem}
+.svc li{padding:7px 0;border-top:1px solid #dedad3}
+.svc li::before{content:"→ ";color:var(--red);font-weight:600}
+
+/* suspension / pricing */
+.pricing{background:var(--asphalt);color:var(--chalk)}
+.pricing .section-head p{color:var(--muted-dark)}
+.rate{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center;border:1px solid var(--line);padding:36px 40px;margin-bottom:48px;background:var(--asphalt-2)}
+.rate-price{font-family:var(--display);font-weight:800;font-size:clamp(3.6rem,8vw,6rem);line-height:.9;color:var(--amber)}
+.rate-price small{display:block;font-size:1.1rem;letter-spacing:.12em;color:var(--muted-dark);font-weight:600;margin-top:8px}
+.rate p{color:#d0d3d7}
+.rate p strong{color:#fff}
+.tabs{display:flex;gap:4px;margin-bottom:0}
+.tab{font-family:var(--display);font-weight:800;font-size:1.4rem;letter-spacing:.08em;text-transform:uppercase;padding:14px 30px;background:var(--asphalt-2);color:var(--muted-dark);border:0;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--sky);color:var(--asphalt)}
+.panel{display:none;border-top:4px solid var(--sky);background:var(--asphalt-2)}
+.panel.active{display:grid;grid-template-columns:1fr 1fr}
+.panel-col{padding:32px 40px}
+.panel-col + .panel-col{border-left:1px solid var(--line)}
+.panel-col h4{font-family:var(--display);font-size:1.15rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sky);margin-bottom:12px}
+.price-row{display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px dashed var(--line)}
+.price-row:last-child{border-bottom:0}
+.price-row span:first-child{color:#e4e6e9}
+.price-row span small{display:block;color:var(--muted-dark);font-size:.85rem}
+.price-row b{font-family:var(--display);font-size:1.6rem;font-weight:800;white-space:nowrap}
+.note{margin-top:20px;font-size:.9rem;color:var(--muted-dark)}
+
+.intervals{margin-top:80px}
+.intervals h3{font-size:2.2rem;margin-bottom:8px}
+.intervals > p{color:var(--muted-dark);max-width:640px}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);margin-top:36px;position:relative}
+.timeline::before{content:"";position:absolute;left:0;right:0;top:15px;height:3px;background:linear-gradient(90deg,var(--sky),var(--amber),var(--red))}
+.tl{padding-right:24px;position:relative}
+.tl::before{content:"";display:block;width:33px;height:33px;border-radius:50%;background:var(--asphalt);border:3px solid var(--sky);margin-bottom:18px;position:relative}
+.tl:nth-child(2)::before{border-color:#a9b98f}
+.tl:nth-child(3)::before{border-color:var(--amber)}
+.tl:nth-child(4)::before{border-color:var(--red)}
+.tl b{font-family:var(--display);font-size:1.7rem;font-weight:800;display:block;line-height:1}
+.tl p{color:#c4c8cd;font-size:.95rem;margin-top:8px}
+
+/* test centre */
+.test .wrap{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.test-items{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+.test-item{background:var(--paper);padding:22px 18px;border-bottom:4px solid var(--amber)}
+.test-item b{font-family:var(--display);font-size:1.4rem;text-transform:uppercase;display:block}
+.test-item span{font-size:.9rem;color:var(--muted)}
+.test p.big{font-size:1.15rem;color:#3b3f45;margin-top:20px}
+.test .photo{aspect-ratio:1/1}
+.test .btn{margin-top:32px;background:var(--ink);color:#fff}
+
+/* about */
+.about{background:var(--paper)}
+.about-top{display:grid;grid-template-columns:1fr 1fr;gap:72px;margin-bottom:72px}
+.about-top blockquote{font-family:var(--display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:clamp(2rem,4vw,3rem);line-height:1;color:var(--ink)}
+.about-top blockquote em{color:var(--red);font-style:italic}
+.about-top p{color:#3b3f45;margin-bottom:14px}
+.values{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:3px solid var(--ink);margin-bottom:80px}
+.value{padding:28px 28px 0 0}
+.value b{font-family:var(--display);text-transform:uppercase;font-size:1.7rem;display:block}
+.value span{color:var(--red);font-weight:600}
+.team{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.member{display:grid;grid-template-columns:200px 1fr;background:var(--chalk)}
+.member .photo{aspect-ratio:4/5;min-height:100%}
+.member-body{padding:28px;align-self:end}
+.member-body h3{font-size:2rem}
+.member-body p{color:var(--muted);margin-top:6px}
+.partners{display:flex;flex-wrap:wrap;gap:16px;margin-top:40px}
+.partner{flex:1 1 300px;border:2px solid var(--ink);padding:20px 24px;display:flex;gap:16px;align-items:center}
+.partner b{font-family:var(--display);font-size:1.5rem;text-transform:uppercase;line-height:1}
+.partner small{display:block;color:var(--muted);font-size:.9rem}
+
+/* tips */
+.tips{background:var(--sky);color:var(--asphalt)}
+.tips .eyebrow{color:var(--asphalt)}
+.tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.tip{background:rgba(255,255,255,.55);padding:28px}
+.tip b{font-family:var(--display);text-transform:uppercase;font-size:1.05rem;letter-spacing:.16em;display:block;margin-bottom:8px;color:var(--red)}
+.tip h3{margin-bottom:10px}
+.tip p{font-size:.98rem}
+
+/* contact */
+.contact{background:var(--asphalt);color:var(--chalk)}
+.contact-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px}
+.contact h2 em{color:var(--amber);font-style:normal}
+.contact-list{margin-top:36px;display:grid;gap:22px}
+.contact-list a,.contact-list div{text-decoration:none;display:block}
+.contact-list small{display:block;font-family:var(--display);letter-spacing:.18em;text-transform:uppercase;color:var(--sky);font-size:.95rem}
+.contact-list strong{font-size:1.4rem;font-weight:600}
+.contact-list a:hover strong{color:var(--amber)}
+.hours{background:var(--asphalt-2);border:1px solid var(--line);padding:32px}
+.hours h3{margin-bottom:18px}
+.hours table{width:100%;border-collapse:collapse}
+.hours td{padding:12px 0;border-bottom:1px solid var(--line)}
+.hours td:last-child{text-align:right;font-weight:600}
+.hours tr.today td{color:var(--amber)}
+.hours tr.closed td:last-child{color:var(--muted-dark);font-weight:400}
+.map{margin-top:24px;aspect-ratio:16/9;border:0;width:100%;filter:grayscale(.6) contrast(1.05)}
+.socials{display:flex;gap:12px;margin-top:28px}
+.socials a{font-family:var(--display);font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:1px solid var(--line);padding:8px 16px}
+.socials a:hover{border-color:var(--sky);color:var(--sky)}
+
+footer{background:#0d0f11;color:var(--muted-dark);padding:32px 0;font-size:.9rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+footer a{text-decoration:none;margin-left:20px}
+footer a:hover{color:#fff}
+
+/* responsive */
+@media (max-width:960px){
+  .menu{position:fixed;inset:76px 0 auto 0;flex-direction:column;align-items:stretch;gap:0;background:var(--asphalt);padding:8px 24px 24px;transform:translateY(-120%);visibility:hidden;transition:transform .25s, visibility .25s;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .menu.open{transform:none;visibility:visible}
+  .menu li a{display:block;padding:14px 0;border-bottom:1px solid var(--line)}
+  .menu .btn{margin-top:16px;justify-content:center;border:0}
+  .burger{display:block}
+  .intro .wrap,.test .wrap,.about-top,.contact-grid{grid-template-columns:1fr;gap:40px}
+  .svc-grid,.tips-grid{grid-template-columns:1fr}
+  .team{grid-template-columns:1fr}
+  .timeline{grid-template-columns:1fr 1fr;row-gap:32px}
+  .timeline::before{display:none}
+}
+@media (max-width:700px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  section{padding:72px 0}
+  .pillars .wrap{grid-template-columns:1fr}
+  .pillar,.pillar:first-child{border-left:0;border-top:1px solid rgba(255,255,255,.25);padding:24px 0}
+  .pillar:first-child{border-top:0}
+  .rate{grid-template-columns:1fr;gap:16px;padding:24px}
+  .panel.active{grid-template-columns:1fr}
+  .panel-col{padding:24px}
+  .panel-col + .panel-col{border-left:0;border-top:1px solid var(--line)}
+  .tab{flex:1;padding:12px}
+  .values{grid-template-columns:1fr}
+  .member{grid-template-columns:120px 1fr}
+  .test-items{grid-template-columns:1fr}
+  footer a{margin:0 16px 0 0}
+}
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="wrap nav">
+    <a href="#top" class="logo" aria-label="PICSTOP – úvod">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <span class="logo-text">PIC<b>STOP</b></span>
+    </a>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <ul class="menu">
+      <li><a href="#servis">Servis</a></li>
+      <li><a href="#cenik">Ceník</a></li>
+      <li><a href="#test">Test centrum</a></li>
+      <li><a href="#o-nas">O nás</a></li>
+      <li><a href="https://www.picstop-shop.cz" target="_blank" rel="noopener">E-shop</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+      <li><a href="https://www.picstop.cz/rezervace/" class="btn btn-amber">Rezervace</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-label="Úvod">
+  <div class="photo" data-label="img/hero.jpg"><img src="img/hero.jpg" alt="Mechanik PICSTOP při servisu kola" onerror="this.remove()"></div>
+  <div class="wrap hero-inner">
+    <div class="status" id="status"><i></i><span>Otevírací doba</span></div>
+    <h1>Cykloservis pro <em>náročné</em></h1>
+    <p class="lead">Silnice, full, nebo triatlonový speciál. Děláme přesně takový servis, jaký bychom za své peníze očekávali my. Sami závodíme, a tak víme, jak mají kola fungovat.</p>
+    <div class="hero-actions">
+      <a href="https://www.picstop.cz/rezervace/" class="btn btn-amber">Rezervovat servis →</a>
+      <a href="tel:+420735150733" class="btn btn-ghost">735 150 733</a>
+    </div>
+    <div class="brands" aria-label="Certifikovaný servis odpružení">
+      <span>Certifikovaný servis</span><span>FOX</span><span>RockShox</span><span>Marzocchi</span>
+    </div>
+  </div>
+</section>
+
+<div class="pillars">
+  <div class="wrap">
+    <div class="pillar"><h3>Pevná cena</h3><p>Vždy dopředu víte, kolik zaplatíte. Žádná překvápka.</p></div>
+    <div class="pillar"><h3>Precizní práce</h3><p>Vždycky s nejvyšším nasazením, nic nenecháváme náhodě.</p></div>
+    <div class="pillar"><h3>Vždy připraveni</h3><p>Ať je pondělí ráno, nebo pátek odpoledne, jsme tu pro vás.</p></div>
+  </div>
+</div>
+
+<section class="intro">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Proč PICSTOP</div>
+      <h2>Ty stroje sami jezdíme</h2>
+      <p>Nabízíme širokou škálu servisních úkonů na kolech prakticky všech značek a typů. Sami aktivně sportujeme a jezdíme, takže rozumíme tomu, co tvoje kolo potřebuje.</p>
+      <p>Při servisu i výběru materiálu se opíráme o bohaté závodní zkušenosti a vždy hledáme řešení, které je pro tebe nejvhodnější.</p>
+      <div class="tags"><span>Vidlice &amp; tlumiče</span><span>Shimano Di2</span><span>SRAM AXS</span><span>Zadní stavby</span><span>Časovky</span><span>Triatlon</span></div>
+    </div>
+    <div class="photo" data-label="img/dilna.jpg"><img src="img/dilna.jpg" alt="Dílna PICSTOP" onerror="this.remove()"></div>
+  </div>
+</section>
+
+<section class="services" id="servis">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="eyebrow">Servis</div><h2>Co pro tebe uděláme</h2></div>
+      <p>Servis kol je naše hlavní činnost a dáváme do něj nejvíc energie. Osobní přístup, profesionální práce a dobrý pocit z jízdy.</p>
+    </div>
+    <div class="svc-grid">
+      <article class="svc">
+        <div class="photo light" data-label="img/servis-kol.jpg"><img src="img/servis-kol.jpg" alt="Servis kola" onerror="this.remove()"></div>
+        <div class="svc-body">
+          <div class="svc-num">01</div>
+          <h3>Servis kol</h3>
+          <p>Od jarní kontroly po kompletní generálku. Silniční, horská, gravel i triatlonová kola.</p>
+          <ul><li>Seřízení řazení a brzd</li><li>Elektronické řazení Di2 a AXS</li><li>Zadní stavby a ložiska</li><li>Stavba kol na míru</li></ul>
+        </div>
+      </article>
+      <article class="svc">
+        <div class="photo light" data-label="img/odpruzeni.jpg"><img src="img/odpruzeni.jpg" alt="Servis vidlice" onerror="this.remove()"></div>
+        <div class="svc-body">
+          <div class="svc-num">02</div>
+          <h3>Vidlice a tlumiče</h3>
+          <p>Certifikovaný servis odpružení FOX, RockShox a Marzocchi přímo u nás, za pevnou cenu.</p>
+          <ul><li>Malý servis po 50 h</li><li>Velký sezónní servis</li><li>Servis teleskopických sedlovek</li></ul>
+        </div>
+      </article>
+      <article class="svc">
+        <div class="photo light" data-label="img/zavody.jpg"><img src="img/zavody.jpg" alt="Příprava závodního kola" onerror="this.remove()"></div>
+        <div class="svc-body">
+          <div class="svc-num">03</div>
+          <h3>Příprava na závod</h3>
+          <p>Kola závoďákům připravujeme celou sezónu a jezdíme jako mechanici přímo na závody.</p>
+          <ul><li>Časovky a triatlonové speciály</li><li>Kontrola před závodem</li><li>Poradenství s materiálem</li></ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="cenik">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="eyebrow">Ceník</div><h2>Férově v hodinovce</h2></div>
+      <p>Jarní kontrola, nebo generálka včetně tlumení? Odservisujeme snad vše, co má dvě kola a pedály.</p>
+    </div>
+
+    <div class="rate">
+      <div class="rate-price">1 320 Kč<small>hodinová sazba vč. DPH</small></div>
+      <p>Běžný servis účtujeme podle skutečně odpracovaného času. <strong>Pevnou cenu má předservisní mytí a servis odpružení</strong>, takže vždy dopředu víte, kolik zaplatíte.</p>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="p-rs" id="t-rs">RockShox</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-fox" id="t-fox">Fox</button>
+    </div>
+    <div class="panel active" role="tabpanel" id="p-rs" aria-labelledby="t-rs">
+      <div class="panel-col">
+        <h4>Vidlice</h4>
+        <div class="price-row"><span>Malý servis<small>po 50 h</small></span><b>380 Kč</b></div>
+        <div class="price-row"><span>Velký servis<small>po 100/200 h, dle typu vidlice</small></span><b>990–1 710 Kč</b></div>
+      </div>
+      <div class="panel-col">
+        <h4>Tlumič</h4>
+        <div class="price-row"><span>Malý servis tlumiče<small>po 50 h</small></span><b>450 Kč</b></div>
+        <div class="price-row"><span>Velký servis tlumiče<small>po 100/200 h</small></span><b>1 710 Kč</b></div>
+      </div>
+    </div>
+    <div class="panel" role="tabpanel" id="p-fox" aria-labelledby="t-fox">
+      <div class="panel-col">
+        <h4>Vidlice</h4>
+        <div class="price-row"><span>Malý servis</span><b>380 Kč</b></div>
+        <div class="price-row"><span>Velký servis<small>po 125 h / 1× ročně</small></span><b>1 980 Kč</b></div>
+      </div>
+      <div class="panel-col">
+        <h4>Tlumič</h4>
+        <div class="price-row"><span>Malý servis<small>po 50 h</small></span><b>450 Kč</b></div>
+        <div class="price-row"><span>Velký servis<small>po 125 h / 1× ročně</small></span><b>1 710 Kč</b></div>
+      </div>
+    </div>
+    <p class="note">Ceny jsou uvedeny včetně DPH. Servis odpružení Marzocchi naceníme individuálně.</p>
+
+    <div class="intervals">
+      <h3>Kdy na servis odpružení</h3>
+      <p>Každý výrobce doporučuje servis minimálně jednou ročně. Pravidelná údržba udrží vidlici v kondici, jakou zamýšlel výrobce.</p>
+      <div class="timeline">
+        <div class="tl"><b>Po každé jízdě</b><p>Setřít nečistoty a ošetřit stírací kroužky silikonovým olejem.</p></div>
+        <div class="tl"><b>50 h</b><p>Servis spodních nohou, výměna oleje, kontrola a výměna stíracích kroužků.</p></div>
+        <div class="tl"><b>100–200 h / 125 h</b><p>Plný sezónní servis vzduchové i olejové komory (RockShox / FOX).</p></div>
+        <div class="tl"><b>400–600 h</b><p>Servis teleskopických sedlovek.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="test" id="test">
+  <div class="wrap">
+    <div class="photo light" data-label="img/test-centrum.jpg"><img src="img/test-centrum.jpg" alt="Testovací centrum" onerror="this.remove()"></div>
+    <div>
+      <div class="eyebrow">Testovací centrum</div>
+      <h2>Vyzkoušej, než koupíš</h2>
+      <p class="big">Nenechávej výběr náhodě. Přijď se poradit s odborníky a vyzkoušej si kolo, sedlo nebo brašnu dřív, než za ně utratíš peníze.</p>
+      <div class="test-items">
+        <div class="test-item"><b>Karbonová kola</b><span>zapůjčení na test</span></div>
+        <div class="test-item"><b>Sedla</b><span>najdi to pravé</span></div>
+        <div class="test-item"><b>Brašny</b><span>bikepacking i dojíždění</span></div>
+      </div>
+      <a href="#kontakt" class="btn">Domluvit test →</a>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="o-nas">
+  <div class="wrap">
+    <div class="about-top">
+      <div>
+        <div class="eyebrow">O nás</div>
+        <blockquote>Lépe, rychleji a&nbsp;hlavně <em>s úsměvem!</em></blockquote>
+      </div>
+      <div>
+        <p>Začalo to nadšením pro cyklistiku. Dnes máme za sebou tisíce hodin v dílně a desítky tisíc najetých kilometrů. Rozumíme cyklistice, běhu i triatlonu.</p>
+        <p>Sport pro nás není jen koníček nebo práce, je to životní styl. Mimo dílnu závodíme, jezdíme na sportovní akce a připravujeme kola závodníkům. Rádi předáváme zkušenosti dál, abys nemusel opakovat chyby, které jsme už udělali my.</p>
+      </div>
+    </div>
+    <div class="values">
+      <div class="value"><b>Vysoce efektivní</b><span>Nic neděláme zbytečně!</span></div>
+      <div class="value"><b>Zapálení</b><span>Děláme, co nás baví!</span></div>
+      <div class="value"><b>Zkušení</b><span>Ale ne nafoukaní!</span></div>
+    </div>
+    <div class="team">
+      <div class="member">
+        <div class="photo light" data-label="img/zdenek.jpg"><img src="img/zdenek.jpg" alt="Zdeněk Oupic" onerror="this.remove()"></div>
+        <div class="member-body"><h3>Zdeněk Oupic</h3><p>Zakladatel, mechanik, závodník</p></div>
+      </div>
+      <div class="member">
+        <div class="photo light" data-label="img/tadeas.jpg"><img src="img/tadeas.jpg" alt="Tadeáš Šíma" onerror="this.remove()"></div>
+        <div class="member-body"><h3>Tadeáš Šíma</h3><p>Sociální sítě, dálkový cyklista, autor</p></div>
+      </div>
+    </div>
+    <div class="partners">
+      <div class="partner"><div><b>BeTri</b><small>Oficiální partner triatlonového klubu od roku 2026</small></div></div>
+      <div class="partner"><div><b>ATT Investments</b><small>Mechanici závodního týmu</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="tips" id="tipy">
+  <div class="wrap">
+    <div class="eyebrow">Servis doma</div>
+    <h2>Jak oddálit návštěvu servisu</h2>
+    <div class="tips-grid">
+      <div class="tip"><b>Před jízdou</b><h3>Brzdy, upnutí, vůle</h3><p>Funkční brzdy jsou na kole to nejdůležitější. Zkontroluj taky upnutí kol a vůli hlavového složení i zadní stavby.</p></div>
+      <div class="tip"><b>Po jízdě</b><h3>Řetěz a odpružení</h3><p>Otři řetěz hadříkem s olejem (nestříkej olej přímo na řetěz), pak ho namaž. Vidlici očisti a ošetři silikonovým olejem.</p></div>
+      <div class="tip"><b>Během sezóny</b><h3>Měř řetěz</h3><p>Včasná výměna řetězu ušetří spoustu peněz. Brzdové destičky měň, když zbývá zhruba milimetr materiálu.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="kontakt">
+  <div class="wrap contact-grid">
+    <div>
+      <div class="eyebrow" style="color:var(--sky)">Kontakt</div>
+      <h2>Zastav se v <em>pitstopu</em></h2>
+      <div class="contact-list">
+        <a href="https://google.com/maps/place/PICSTOP/@50.0996949,14.3421058,17z" target="_blank" rel="noopener"><small>Adresa</small><strong>Na Lužci 226/10, 160 00 Praha 6</strong></a>
+        <a href="tel:+420735150733"><small>Telefon</small><strong>+420 735 150 733</strong></a>
+        <a href="mailto:servis@picstop.cz"><small>E-mail</small><strong>servis@picstop.cz</strong></a>
+      </div>
+      <div class="socials">
+        <a href="https://www.facebook.com/PICSTOPservis" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.instagram.com/picstop_servis/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div>
+      <div class="hours">
+        <h3>Otevírací doba</h3>
+        <table id="hours">
+          <tr data-d="1"><td>Pondělí</td><td>11:00–19:00</td></tr>
+          <tr data-d="2"><td>Úterý</td><td>9:00–17:00</td></tr>
+          <tr data-d="3"><td>Středa</td><td>9:00–17:00</td></tr>
+          <tr data-d="4"><td>Čtvrtek</td><td>9:00–17:00</td></tr>
+          <tr data-d="5"><td>Pátek</td><td>11:00–19:00</td></tr>
+          <tr data-d="6" class="closed"><td>Sobota</td><td>Zavřeno</td></tr>
+          <tr data-d="0" class="closed"><td>Neděle</td><td>Zavřeno</td></tr>
+        </table>
+      </div>
+      <iframe class="map" title="Mapa – PICSTOP" loading="lazy" src="https://maps.google.com/maps?q=50.0996915,14.3446807&z=16&output=embed"></iframe>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> PICSTOP – cykloservis pro náročné</span>
+    <span><a href="https://www.picstop.cz/kontakty/reklamace/">Reklamace</a><a href="https://www.picstop.cz/kontakty/ochrana-osobnich-udaju/">Ochrana osobních údajů</a></span>
+  </div>
+</footer>
+
+<script>
+// sticky header background
+const header = document.querySelector('header');
+const onScroll = () => header.classList.toggle('scrolled', scrollY > 40);
+addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+// mobile menu
+const burger = document.querySelector('.burger'), menu = document.querySelector('.menu');
+burger.addEventListener('click', () => {
+  const open = menu.classList.toggle('open');
+  burger.setAttribute('aria-expanded', open);
+});
+menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+
+// price tabs
+document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', t === tab));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === tab.getAttribute('aria-controls')));
+}));
+
+// open-now indicator (Prague time)
+const HOURS = {1:[11,19],2:[9,17],3:[9,17],4:[9,17],5:[11,19]};
+const NAMES = ['v neděli','v pondělí','v úterý','ve středu','ve čtvrtek','v pátek','v sobotu'];
+const now = new Date(new Date().toLocaleString('en-US', {timeZone:'Europe/Prague'}));
+const d = now.getDay(), h = now.getHours() + now.getMinutes()/60;
+const status = document.getElementById('status');
+document.querySelector(`#hours tr[data-d="${d}"]`)?.classList.add('today');
+if (HOURS[d] && h >= HOURS[d][0] && h < HOURS[d][1]) {
+  status.classList.add('open');
+  status.querySelector('span').textContent = `Teď otevřeno, do ${HOURS[d][1]}:00`;
+} else {
+  let n = d;
+  do { n = (n + 1) % 7; } while (!HOURS[n]);
+  const today = HOURS[d] && h < HOURS[d][0];
+  const day = today ? d : n;
+  status.querySelector('span').textContent = `Zavřeno · otevíráme ${today ? 'dnes' : NAMES[day]} v ${HOURS[day][0]}:00`;
+}
+document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
