@@ -151,7 +151,7 @@ section{padding:110px 0}
 .timeline{display:grid;grid-template-columns:repeat(4,1fr);margin-top:36px;position:relative}
 .timeline::before{content:"";position:absolute;left:0;right:0;top:15px;height:4px;background:var(--heat)}
 .tl{padding-right:24px}
-.tl::before{content:"";display:block;width:34px;height:34px;transform:skewX(-12deg);background:var(--black);border:4px solid var(--red);margin-bottom:18px;position:relative}
+.tl::before{content:"";display:block;width:34px;height:34px;transform:skewX(-12deg);background:var(--black) url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Cpath d=%27M5 12.5l4.5 4.5L19 7%27 fill=%27none%27 stroke=%27%2346d36b%27 stroke-width=%273.4%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E") center/80% no-repeat;border:4px solid var(--red);margin-bottom:18px;position:relative}
 .tl:nth-child(3)::before{border-color:var(--orange)}
 .tl:nth-child(4)::before{border-color:var(--yellow)}
 .tl b{font-family:var(--display);font-style:italic;font-size:1.8rem;font-weight:800;display:block;line-height:1;color:var(--white)}
