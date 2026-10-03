@@ -48,6 +48,7 @@ h3{font-size:1.7rem}
 .photo{position:relative;background:repeating-linear-gradient(135deg,#1a1a1d 0 14px,#141416 14px 28px);overflow:hidden}
 .photo::after{content:attr(data-label);position:absolute;right:10px;bottom:10px;font:600 .72rem var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:rgba(0,0,0,.6);padding:4px 8px}
 .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.photo:has(img)::after{display:none}
 
 /* logo */
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
@@ -69,7 +70,8 @@ header.scrolled{background:rgba(11,11,12,.96);box-shadow:0 1px 0 var(--line)}
 /* hero */
 .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden;border-right:14px solid var(--red)}
 .hero .photo{position:absolute;inset:0}
-.hero .photo::before{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(11,11,12,.6) 0%,rgba(11,11,12,.15) 40%,rgba(11,11,12,.95) 100%)}
+.hero .photo img{object-position:center 35%}
+.hero .photo::before{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,rgba(11,11,12,.75) 0%,rgba(11,11,12,.2) 70%),linear-gradient(180deg,rgba(11,11,12,.6) 0%,rgba(11,11,12,.15) 40%,rgba(11,11,12,.95) 100%)}
 .hero .photo::after{top:90px;bottom:auto;z-index:3}
 .hero-inner{position:relative;z-index:5;padding:140px 24px 72px;width:100%}
 .hero h1{font-size:clamp(3.6rem,11vw,9.5rem);max-width:11ch;letter-spacing:-.01em}
@@ -209,6 +211,12 @@ a.partner:hover{border-color:var(--red)}
 .insta .wrap{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap}
 .insta h2{font-size:clamp(2.2rem,4vw,3.4rem)}
 .insta h2 span{color:var(--red)}
+.gallery{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:40px}
+.gallery a{position:relative;aspect-ratio:1/1;overflow:hidden;display:block}
+.gallery img{width:100%;height:100%;object-fit:cover;transition:transform .3s, filter .3s;filter:saturate(.9)}
+.gallery a:hover img{transform:scale(1.05);filter:saturate(1.1)}
+.credit{display:block;margin-top:6px;font-size:.8rem}
+@media (max-width:960px){.gallery{grid-template-columns:repeat(3,1fr)}}
 
 /* contact */
 .contact{background:var(--panel)}
@@ -399,14 +407,14 @@ footer a:hover{color:var(--white)}
   <div class="wrap">
     <div class="race-grid">
       <div class="tile"><h3>Závoď jako profík.<br>Podej 100% výkon.</h3><span class="bar" style="margin-bottom:0"></span></div>
-      <div class="photo" data-label="img/zavod-1.jpg"><img src="img/zavod-1.jpg" alt="Silniční závod" onerror="this.remove()"></div>
+      <div class="photo" data-label="img/zavod-1.jpg"><img src="img/zavod-1.jpg" style="object-position:center 20%" alt="Silniční cyklista v noci" onerror="this.remove()"></div>
       <div class="tile"><h3>Užij si triatlon na maximum.</h3><span class="bar" style="margin-bottom:0"></span></div>
       <div class="photo" data-label="img/zavod-2.jpg"><img src="img/zavod-2.jpg" alt="Mechanik při přípravě kola" onerror="this.remove()"></div>
       <div class="tile race-main">
         <div class="kicker">Privátní servisman</div>
         <h2>Soustřeď se jen na závod<em>My se postaráme o vše ostatní. Pro jednotlivce i týmy, v ČR i v zahraničí.</em></h2>
       </div>
-      <div class="photo" data-label="img/zavod-3.jpg"><img src="img/zavod-3.jpg" alt="Triatlonista v cíli" onerror="this.remove()"></div>
+      <div class="photo" data-label="img/zavod-3.jpg"><img src="img/zavod-3.jpg" alt="Závodnice Betri na stupních vítězů" onerror="this.remove()"></div>
       <div class="tile">
         <div class="kicker">Nabízíme</div>
         <ul class="offer">
@@ -417,8 +425,8 @@ footer a:hover{color:var(--white)}
           <li>krásné fotky ze závodu</li>
         </ul>
       </div>
-      <div class="photo" data-label="img/zavod-4.jpg"><img src="img/zavod-4.jpg" alt="Horský maraton" onerror="this.remove()"></div>
-      <div class="photo" data-label="img/zavod-5.jpg"><img src="img/zavod-5.jpg" alt="Start triatlonu" onerror="this.remove()"></div>
+      <div class="photo" data-label="img/zavod-4.jpg"><img src="img/zavod-4.jpg" alt="Silniční cyklista v zatáčce" onerror="this.remove()"></div>
+      <div class="photo" data-label="img/zavod-5.jpg"><img src="img/zavod-5.jpg" style="object-position:center 85%" alt="Noční silniční jízda" onerror="this.remove()"></div>
     </div>
     <div class="race-cta">
       <a href="#kontakt" class="btn btn-red">Domluvit závod</a>
@@ -549,6 +557,14 @@ footer a:hover{color:var(--white)}
     <h2>Sleduj dílnu i závody<br><span>@picstop_cz</span></h2>
     <a href="https://www.instagram.com/picstop_cz/" class="btn btn-line" target="_blank" rel="noopener">Instagram</a>
   </div>
+  <div class="wrap gallery">
+    <a href="https://www.instagram.com/picstop_cz/" target="_blank" rel="noopener"><img src="img/galerie-1.jpg" alt="Titanové horské kolo" loading="lazy"></a>
+    <a href="https://www.instagram.com/picstop_cz/" target="_blank" rel="noopener"><img src="img/galerie-2.jpg" alt="Stavba silničního kola v dílně" loading="lazy"></a>
+    <a href="https://www.instagram.com/picstop_cz/" target="_blank" rel="noopener"><img src="img/galerie-3.jpg" alt="Canyon Speedmax připravený na Ironman" loading="lazy"></a>
+    <a href="https://www.instagram.com/picstop_cz/" target="_blank" rel="noopener"><img src="img/galerie-4.jpg" alt="Colnago C64" loading="lazy"></a>
+    <a href="https://www.instagram.com/picstop_cz/" target="_blank" rel="noopener"><img src="img/galerie-5.jpg" alt="Cannondale Scalpel" loading="lazy"></a>
+    <a href="https://www.instagram.com/picstop_cz/" target="_blank" rel="noopener"><img src="img/galerie-6.jpg" alt="Elektrické enduro Cannondale Moterra" loading="lazy"></a>
+  </div>
 </section>
 <div class="speed" aria-hidden="true"></div>
 
@@ -589,7 +605,7 @@ footer a:hover{color:var(--white)}
 
 <footer>
   <div class="wrap">
-    <span>© <span id="y"></span> PICSTOP – cykloservis pro náročné</span>
+    <span>© <span id="y"></span> PICSTOP – cykloservis pro náročné<small class="credit">Foto: PICSTOP, @jirik.visuals, @betri_cz</small></span>
     <span><a href="https://www.picstop.cz/kontakty/reklamace/">Reklamace</a><a href="https://www.picstop.cz/kontakty/ochrana-osobnich-udaju/">Ochrana osobních údajů</a></span>
   </div>
 </footer>

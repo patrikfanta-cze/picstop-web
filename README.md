@@ -4,8 +4,8 @@ Jednostránkový web cykloservisu PICSTOP (Praha 6). Čisté HTML/CSS/JS bez bui
 
 ## Fotky
 
-Fotky patří do složky `img/` s těmito názvy (dokud chybí, zobrazí se zástupná plocha):
+Fotky jsou ve složce `img/` (zdroj: picstop.cz a Instagram @picstop_cz; noční fotky @jirik.visuals, pódium @betri_cz). Chybějící soubor se zobrazí jako zástupná plocha – zatím chybí `zdenek.jpg` a `tadeas.jpg`.
 
-`hero.jpg`, `dilna.jpg`, `servis-kol.jpg`, `odpruzeni.jpg`, `stavba.jpg`, `zavod-1.jpg` … `zavod-5.jpg`, `test-centrum.jpg`, `zdenek.jpg`, `tadeas.jpg`
+Fotky z Instagramu mají jen 640 px – pro ostřejší web je vyměň za originály se stejným názvem.
 
 Logo v hlavičce je zatím jen přibližná SVG kresba (`<symbol id="mark">` v `index.html`) – nahradit oficiálním souborem.
