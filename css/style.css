@@ -280,7 +280,7 @@ footer .made a{margin:0;color:var(--white);text-decoration:underline;text-decora
 .steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:40px 0 36px;counter-reset:none}
 .steps li{font-family:var(--display);font-weight:700;font-style:italic;text-transform:uppercase;font-size:1.05rem;color:var(--muted);padding-bottom:10px;border-bottom:5px solid var(--panel-2)}
 .steps li.active{color:var(--white);border-color:var(--red)}
-.step-panel{display:none}
+.step-panel{display:none;padding:0}
 .step-panel.active{display:block;animation:fade .25s ease}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .step-title{font-size:2.2rem;margin-bottom:22px}
