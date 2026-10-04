@@ -382,8 +382,8 @@ footer .made a{margin:0;color:var(--white);text-decoration:underline;text-decora
 
 /* map placeholder: the Google map loads only after a click */
 .map-consent{display:flex;align-items:center;justify-content:center;filter:none;position:relative;overflow:hidden;background:var(--black);border:1px solid var(--line)}
-.map-consent::before{content:"";position:absolute;inset:0;background:url(../img/mapa.jpg?v=1) center/cover;filter:grayscale(1) invert(.92) contrast(.9) brightness(.8)}
-.map-consent::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(11,11,12,.55),rgba(11,11,12,.88) 75%)}
+.map-consent::before{content:"";position:absolute;inset:0;background:url(../img/mapa.jpg?v=1) center/cover;filter:grayscale(1) invert(.92) contrast(1.05) brightness(1.15)}
+.map-consent::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(11,11,12,.5),rgba(11,11,12,.72) 80%)}
 .map-inner{position:relative;z-index:1}
 .map-credit{position:absolute;right:8px;bottom:6px;z-index:1;font-size:.7rem;color:var(--muted)}
 .map-inner{text-align:center;padding:24px;max-width:420px}
