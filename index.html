@@ -6,10 +6,8 @@
 <title>PICSTOP – cykloservis pro náročné | Praha 6</title>
 <meta name="description" content="Cykloservis PICSTOP v Praze 6. Servis silničních, horských i triatlonových kol, certifikovaný servis odpružení FOX, RockShox a Marzocchi, privátní servisman na závody pro jednotlivce i týmy.">
 <link rel="icon" href="img/logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;1,700;1,800&family=Barlow:ital,wght@0,400;0,500;0,600;1,800;1,900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=9">
+<link rel="stylesheet" href="css/fonts.css?v=1">
+<link rel="stylesheet" href="css/style.css?v=10">
 </head>
 <body>
 
@@ -324,7 +322,17 @@
           <tr data-d="0" class="closed"><td>Neděle</td><td>Zavřeno</td></tr>
         </table>
       </div>
-      <iframe class="map" title="Mapa – PICSTOP" loading="lazy" src="https://maps.google.com/maps?q=50.0996915,14.3446807&z=16&output=embed"></iframe>
+      <div class="map map-consent" id="map">
+        <div class="map-inner">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+          <b>Na Lužci 226/10, Praha 6</b>
+          <p>Mapa se načítá ze služby Google. Po zobrazení může Google zpracovávat údaje o vaší návštěvě.</p>
+          <div class="map-actions">
+            <button type="button" class="btn btn-red" id="map-load">Zobrazit mapu</button>
+            <a class="btn btn-line" href="https://google.com/maps/place/PICSTOP/@50.0996949,14.3421058,17z" target="_blank" rel="noopener">Otevřít v Google Mapách</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -333,7 +341,7 @@
 <footer>
   <div class="wrap">
     <span>© <span id="y"></span> PICSTOP – cykloservis pro náročné<small class="credit">Foto: PICSTOP, Běhej srdcem, @jirik.visuals, @betri_cz</small></span>
-    <span><a href="https://www.picstop.cz/kontakty/reklamace/">Reklamace</a><a href="https://www.picstop.cz/kontakty/ochrana-osobnich-udaju/">Ochrana osobních údajů</a></span>
+    <span><a href="https://www.picstop.cz/kontakty/reklamace/">Reklamace</a><a href="ochrana-osobnich-udaju.html">Ochrana osobních údajů</a></span>
     <p class="made">Web vytvořil <a href="mailto:patrik.fanta@gmail.com">Patrik Fanta</a></p>
   </div>
 </footer>
@@ -349,6 +357,15 @@ document.querySelector('.logo').addEventListener('click', e => {
   e.preventDefault();
   scrollTo({top: 0, behavior: 'smooth'});
   history.replaceState(null, '', location.pathname);
+});
+
+// Google map loads only after the visitor asks for it (no data sent to Google before that)
+document.getElementById('map-load').addEventListener('click', () => {
+  const f = document.createElement('iframe');
+  f.className = 'map';
+  f.title = 'Mapa – PICSTOP';
+  f.src = 'https://maps.google.com/maps?q=50.0996915,14.3446807&z=16&output=embed';
+  document.getElementById('map').replaceWith(f);
 });
 
 // mobile menu
