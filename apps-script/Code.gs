@@ -79,15 +79,21 @@ function doPost(e) {
     MailApp.sendEmail({
       to: NOTIFY_EMAIL,
       replyTo: b.email,
-      subject: `Nová rezervace: ${when} – ${b.name}`,
+      subject: `Nová rezervace: ${when} – ${b.name}${b.lang === 'en' ? ' (EN)' : ''}`,
       body: `Služba: ${b.service}\nTermín: ${when}\nJméno: ${b.name}\nTelefon: ${b.phone}\nE-mail: ${b.email}\nKolo: ${b.bike || '—'}\n\n${b.message || ''}`,
     });
+    // Customer confirmation in the language of the page they booked from (b.lang = 'cs' | 'en')
+    const en = b.lang === 'en';
+    const SERVICE_EN = {'Servis kola': 'Bike service', 'Servis odpružení': 'Suspension service', 'Jiné': 'Other'};
+    const whenEn = `${b.date.split('-').reverse().join('/')} at ${b.time}`;
     MailApp.sendEmail({
       to: b.email,
       replyTo: NOTIFY_EMAIL,
       name: SHOP,
-      subject: `Potvrzení rezervace – ${SHOP}, ${when}`,
-      body: `Dobrý den,\n\ndíky za rezervaci. Těšíme se na vás ${when}.\n\nSlužba: ${b.service}\nAdresa: ${SHOP_ADDRESS}\n\nPokud se nemůžete dostavit, dejte nám prosím vědět na ${SHOP_PHONE} nebo odpovědí na tento e-mail.\n\n${SHOP} – cykloservis pro náročné`,
+      subject: en ? `Booking confirmation – ${SHOP}, ${whenEn}` : `Potvrzení rezervace – ${SHOP}, ${when}`,
+      body: en
+        ? `Hello,\n\nthank you for your booking. We look forward to seeing you on ${whenEn}.\n\nService: ${SERVICE_EN[b.service] || b.service}\nAddress: ${SHOP_ADDRESS}, Czech Republic\n\nIf you cannot make it, please let us know at ${SHOP_PHONE} or reply to this e-mail.\n\n${SHOP} – bike service for demanding riders`
+        : `Dobrý den,\n\ndíky za rezervaci. Těšíme se na vás ${when}.\n\nSlužba: ${b.service}\nAdresa: ${SHOP_ADDRESS}\n\nPokud se nemůžete dostavit, dejte nám prosím vědět na ${SHOP_PHONE} nebo odpovědí na tento e-mail.\n\n${SHOP} – cykloservis pro náročné`,
     });
     return json({ok: true});
   } finally {

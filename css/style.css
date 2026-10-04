@@ -420,3 +420,16 @@ footer .made a{margin:0;color:var(--white);text-decoration:underline;text-decora
 .steps-list li::before{content:counter(s);position:absolute;left:22px;top:18px;font-family:var(--display);font-style:italic;font-weight:800;font-size:2rem;color:var(--red-text);line-height:1}
 .steps-list b{display:block;font-family:var(--display);font-style:italic;text-transform:uppercase;font-size:1.25rem;color:var(--white);margin-bottom:2px}
 @media (max-width:700px){.terms{grid-template-columns:1fr}}
+
+/* language switch */
+.lang{display:flex;gap:2px;font-family:var(--display);font-weight:700;font-style:italic;font-size:1rem}
+.lang a,.lang span{padding:5px 8px;line-height:1;letter-spacing:.04em}
+.lang span{background:var(--white);color:var(--black)}
+.lang a{border:1px solid var(--line);color:var(--white);opacity:.85;text-decoration:none}
+.lang a:hover{opacity:1;border-color:var(--red)}
+@media (max-width:960px){
+  .menu .lang{padding:16px 0 4px;border-bottom:0}
+  .menu .lang a,.menu .lang span{padding:8px 14px;font-size:1.1rem;border-bottom:1px solid var(--line)}
+}
+.legal-note{margin-top:18px;padding:10px 14px;border-left:4px solid var(--line);color:var(--muted)!important;font-size:.9rem}
+#service{scroll-margin-top:40px}

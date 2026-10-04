@@ -8,8 +8,31 @@ const HOURS = {1: [11, 19], 2: [9, 17], 3: [9, 17], 4: [9, 17], 5: [11, 19]};
 const BOOK_AHEAD_DAYS = 60;
 const MIN_LEAD_MINUTES = 60;
 
-const MONTHS = ['leden', 'únor', 'březen', 'duben', 'květen', 'červen', 'červenec', 'srpen', 'září', 'říjen', 'listopad', 'prosinec'];
-const DAYS = ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'];
+// Page language decides all texts; bookings are always stored with the Czech service names (radio values).
+const EN = document.documentElement.lang === 'en';
+const MONTHS = EN
+  ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  : ['leden', 'únor', 'březen', 'duben', 'květen', 'červen', 'červenec', 'srpen', 'září', 'říjen', 'listopad', 'prosinec'];
+const DAYS = EN
+  ? ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  : ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'];
+const T = EN ? {
+  pickDay: 'Pick a day', service: 'Service', when: 'Date', name: 'Name', phone: 'Phone', bike: 'Bike', msg: 'Message',
+  sending: 'Sending…', send: 'Send booking', saveFailed: 'The booking could not be saved',
+  retry: 'Please try again or call +420 735 150 733.', at: 'at',
+} : {
+  pickDay: 'Vyber den', service: 'Služba', when: 'Termín', name: 'Jméno', phone: 'Telefon', bike: 'Kolo', msg: 'Zpráva',
+  sending: 'Odesílám…', send: 'Odeslat rezervaci', saveFailed: 'Rezervaci se nepodařilo uložit',
+  retry: 'Zkus to prosím znovu, nebo zavolej na +420 735 150 733.', at: 'v',
+};
+
+// "pondělí 5. 10." in Czech, "Monday 5 October" in English
+function dayLabel(d, withYear = false) {
+  const year = withYear ? ' ' + d.getFullYear() : '';
+  return EN
+    ? `${DAYS[d.getDay()]} ${d.getDate()} ${MONTHS[d.getMonth()]}${year}`
+    : `${DAYS[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}.${year}`;
+}
 
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -94,9 +117,9 @@ function renderSlots() {
   const list = $('#slot-list');
   list.innerHTML = '';
   $('#to-details').disabled = !state.time;
-  if (!state.date) { $('#slots-head').textContent = 'Vyber den'; return; }
+  if (!state.date) { $('#slots-head').textContent = T.pickDay; return; }
   const d = state.date;
-  $('#slots-head').textContent = `${DAYS[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}.`;
+  $('#slots-head').textContent = dayLabel(d);
   for (const s of slotsFor(d)) {
     const b = document.createElement('button');
     b.type = 'button';
@@ -152,17 +175,19 @@ function booking() {
     email: f.get('email').trim(),
     bike: f.get('bike').trim(),
     message: f.get('message').trim(),
+    lang: EN ? 'en' : 'cs',
   };
 }
 
 function renderSummary() {
   const b = booking();
   const d = state.date;
+  const serviceLabel = $('input[name="service"]:checked').closest('label').querySelector('b').textContent;
   const rows = [
-    ['Služba', b.service],
-    ['Termín', `${DAYS[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()} v ${b.time}`],
-    ['Jméno', b.name], ['Telefon', b.phone], ['E-mail', b.email],
-    ['Kolo', b.bike || '—'], ['Zpráva', b.message || '—'],
+    [T.service, serviceLabel],
+    [T.when, `${dayLabel(d, true)} ${T.at} ${b.time}`],
+    [T.name, b.name], [T.phone, b.phone], ['E-mail', b.email],
+    [T.bike, b.bike || '—'], [T.msg, b.message || '—'],
   ];
   const dl = $('#summary');
   dl.innerHTML = '';
@@ -177,25 +202,30 @@ async function submit() {
   const btn = $('#submit');
   const b = booking();
   btn.disabled = true;
-  btn.textContent = 'Odesílám…';
+  btn.textContent = T.sending;
   try {
     if (API_URL) {
       // text/plain avoids a CORS preflight, which Apps Script does not answer
       const r = await fetch(API_URL, {method: 'POST', headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify(b)});
       const res = await r.json();
-      if (!res.ok) throw new Error(res.error || 'Rezervaci se nepodařilo uložit');
+      if (!res.ok) throw new Error(res.error || T.saveFailed);
     }
-    const d = state.date;
-    $('#done-text').textContent = API_URL
-      ? `Rezervace na ${DAYS[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}. v ${b.time} je uložená. Potvrzení jsme poslali na ${b.email}.`
-      : `Ukázka: rezervace na ${DAYS[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}. v ${b.time} by se teď uložila a na ${b.email} by přišlo potvrzení. V ukázkové verzi se nic neodeslalo.`;
+    const when = `${dayLabel(state.date)} ${T.at} ${b.time}`;
+    const done = EN
+      ? (API_URL
+        ? `Your booking for ${when} is saved. We have sent a confirmation to ${b.email}.`
+        : `Demo: your booking for ${when} would now be saved and a confirmation sent to ${b.email}. Nothing was sent in this demo version.`)
+      : (API_URL
+        ? `Rezervace na ${when} je uložená. Potvrzení jsme poslali na ${b.email}.`
+        : `Ukázka: rezervace na ${when} by se teď uložila a na ${b.email} by přišlo potvrzení. V ukázkové verzi se nic neodeslalo.`);
+    $('#done-text').textContent = done;
     go('done');
   } catch (e) {
-    alert(`${e.message}. Zkus to prosím znovu, nebo zavolej na +420 735 150 733.`);
+    alert(`${e.message}. ${T.retry}`);
     if (API_URL) { state.busy.add(`${b.date}T${b.time}`); state.time = null; renderCalendar(); renderSlots(); go(2); }
   } finally {
     btn.disabled = false;
-    btn.textContent = 'Odeslat rezervaci';
+    btn.textContent = T.send;
   }
 }
 

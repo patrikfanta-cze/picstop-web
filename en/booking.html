@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a service | PICSTOP</title>
+<meta name="description" content="Book your bike service online at PICSTOP, Prague 6.">
+<link rel="icon" href="../img/logo.png">
+<link rel="alternate" hreflang="cs" href="https://patrikfanta-cze.github.io/picstop-web/rezervace.html">
+<link rel="alternate" hreflang="en" href="https://patrikfanta-cze.github.io/picstop-web/en/booking.html">
+<link rel="stylesheet" href="../css/fonts.css?v=1">
+<link rel="stylesheet" href="../css/style.css?v=13">
+</head>
+<body class="page-booking">
+
+<header id="top" class="scrolled">
+  <div class="wrap nav">
+    <a href="index.html" class="logo" aria-label="PICSTOP – home">
+      <img src="../img/logo.png" alt="" width="44" height="44">
+      <span class="logo-text">PICSTOP</span>
+    </a>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <ul class="menu">
+      <li><a href="index.html#service">Service</a></li>
+      <li><a href="index.html#racing">Racing</a></li>
+      <li><a href="index.html#pricing">Prices</a></li>
+      <li><a href="index.html#test">Test centre</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="https://www.picstop-shop.cz" target="_blank" rel="noopener">E-shop</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li class="lang"><a href="../rezervace.html" hreflang="cs" lang="cs" title="Česky">CZ</a><span aria-current="true">EN</span></li>
+      <li><a href="booking.html" class="btn btn-red" aria-current="page">Book now</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="booking">
+  <div class="wrap">
+    <div class="kicker">Online booking</div>
+    <h1>Book a service</h1>
+    <span class="bar"></span>
+    <p class="booking-lead">Choose when you will bring your bike in. We go through what it needs together on site and agree on the price upfront.</p>
+
+    <div class="demo-note" id="demo-note" hidden>Demo version: bookings are not saved or sent anywhere yet.</div>
+
+    <ol class="steps" aria-label="Booking steps">
+      <li data-step="1" class="active">1. Service</li>
+      <li data-step="2">2. Date</li>
+      <li data-step="3">3. Details</li>
+      <li data-step="4">4. Confirm</li>
+    </ol>
+
+    <!-- 1: service (values stay Czech so the workshop sees the same names in every booking) -->
+    <section class="step-panel active" data-panel="1">
+      <h2 class="step-title">What do you need?</h2>
+      <div class="service-choice" role="radiogroup" aria-label="Service">
+        <label class="service"><input type="radio" name="service" value="Servis kola" checked><span><b>Bike service</b>Check-up, adjustment, repairs or a full overhaul. Charged at an hourly rate of CZK 1,320.</span></label>
+        <label class="service"><input type="radio" name="service" value="Servis odpružení"><span><b>Suspension service</b>FOX, RockShox and Marzocchi forks and shocks at a fixed price.</span></label>
+        <label class="service"><input type="radio" name="service" value="Jiné"><span><b>Other</b>Custom build, test centre, race preparation. Describe it in the message.</span></label>
+      </div>
+      <div class="step-actions"><span></span><button class="btn btn-red" data-next>Continue</button></div>
+    </section>
+
+    <!-- 2: date + time -->
+    <section class="step-panel" data-panel="2">
+      <h2 class="step-title">When will you bring your bike?</h2>
+      <div class="picker">
+        <div class="calendar">
+          <div class="cal-head">
+            <button class="cal-nav" id="cal-prev" aria-label="Previous month">‹</button>
+            <span id="cal-month"></span>
+            <button class="cal-nav" id="cal-next" aria-label="Next month">›</button>
+          </div>
+          <div class="cal-grid cal-dow"><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span></div>
+          <div class="cal-grid" id="cal-days"></div>
+        </div>
+        <div class="slots">
+          <div class="slots-head" id="slots-head">Pick a day</div>
+          <div class="slot-list" id="slot-list"></div>
+          <p class="slots-hint">Crossed-out times are taken. Closed on Saturday and Sunday.</p>
+        </div>
+      </div>
+      <div class="step-actions"><button class="btn btn-line" data-back>Back</button><button class="btn btn-red" data-next id="to-details" disabled>Continue</button></div>
+    </section>
+
+    <!-- 3: details -->
+    <section class="step-panel" data-panel="3">
+      <h2 class="step-title">Your details</h2>
+      <form class="details" id="details" novalidate>
+        <label>Full name<input name="name" autocomplete="name" required></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel" placeholder="+420 " required></label>
+        <label>E-mail<input name="email" type="email" autocomplete="email" required></label>
+        <label>Bike<input name="bike" placeholder="e.g. Trek Supercaliber, Canyon Speedmax"></label>
+        <label class="full">What needs to be done?<textarea name="message" rows="4"></textarea></label>
+        <label class="consent full"><input type="checkbox" name="consent" required> I acknowledge how PICSTOP processes my <a href="privacy.html" target="_blank">personal data</a> to handle the booking.</label>
+      </form>
+      <div class="step-actions"><button class="btn btn-line" data-back>Back</button><button class="btn btn-red" data-next id="to-confirm">Continue</button></div>
+    </section>
+
+    <!-- 4: confirm -->
+    <section class="step-panel" data-panel="4">
+      <h2 class="step-title">Check your booking</h2>
+      <dl class="summary" id="summary"></dl>
+      <div class="step-actions"><button class="btn btn-line" data-back>Back</button><button class="btn btn-red" id="submit">Send booking</button></div>
+    </section>
+
+    <!-- done -->
+    <section class="step-panel" data-panel="done">
+      <div class="done">
+        <h2>Done, see you soon!</h2>
+        <span class="bar"></span>
+        <p id="done-text"></p>
+        <a href="index.html" class="btn btn-line">Back to the website</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> Zdeněk Oupic (PICSTOP) · Company ID 07735600 · Na Lužci 226/10, 160 00 Prague 6</span>
+    <span><a href="complaints.html">Complaints</a><a href="privacy.html">Privacy policy</a></span>
+    <p class="made">Website by <a href="mailto:patrik.fanta@gmail.com">Patrik Fanta</a></p>
+  </div>
+</footer>
+
+<script src="../js/rezervace.js?v=10"></script>
+</body>
+</html>

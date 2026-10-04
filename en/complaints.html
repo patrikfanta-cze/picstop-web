@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Complaints and warranty | PICSTOP</title>
+<meta name="description" content="Complaint procedure, warranty periods and terms of the PICSTOP bike service.">
+<link rel="icon" href="../img/logo.png">
+<link rel="alternate" hreflang="cs" href="https://patrikfanta-cze.github.io/picstop-web/reklamace.html">
+<link rel="alternate" hreflang="en" href="https://patrikfanta-cze.github.io/picstop-web/en/complaints.html">
+<link rel="stylesheet" href="../css/fonts.css?v=1">
+<link rel="stylesheet" href="../css/style.css?v=13">
+</head>
+<body>
+
+<header id="top" class="scrolled">
+  <div class="wrap nav">
+    <a href="index.html" class="logo" aria-label="PICSTOP – home">
+      <img src="../img/logo.png" alt="" width="44" height="44">
+      <span class="logo-text">PICSTOP</span>
+    </a>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <ul class="menu">
+      <li><a href="index.html#service">Service</a></li>
+      <li><a href="index.html#racing">Racing</a></li>
+      <li><a href="index.html#pricing">Prices</a></li>
+      <li><a href="index.html#test">Test centre</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="https://www.picstop-shop.cz" target="_blank" rel="noopener">E-shop</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li class="lang"><a href="../reklamace.html" hreflang="cs" lang="cs" title="Česky">CZ</a><span aria-current="true">EN</span></li>
+      <li><a href="booking.html" class="btn btn-red">Book now</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="legal">
+  <div class="wrap">
+    <div class="kicker">Terms and conditions</div>
+    <h1>Complaints and warranty</h1>
+    <span class="bar"></span>
+    <p class="legal-lead">If something doesn't work the way it should, bring it to us and we will sort it out together. Below you will find how long the warranty lasts and how to make a claim.</p>
+    <p class="legal-note">This is an English translation provided for convenience. In case of any discrepancy, the <a href="../reklamace.html" hreflang="cs">Czech version</a> prevails.</p>
+
+    <section>
+      <h2>Seller</h2>
+      <p><strong>Zdeněk Oupic (PICSTOP)</strong>, Company ID (IČ) 07735600, registered office Na Lužci 226/10, 160 00 Prague 6. The seller acts within the scope of its business when concluding and performing contracts and supplies goods and services to buyers.</p>
+      <p>A buyer is either a <strong>consumer</strong>, i.e. a person buying outside their business activity, or a <strong>business</strong> buying in connection with their business or profession.</p>
+    </section>
+
+    <section>
+      <h2>Warranty periods</h2>
+      <div class="terms">
+        <div><b>24 months</b><span>Goods</span><p>Statutory warranty from the date of purchase. It does not cover normal wear and tear from use.</p></div>
+        <div><b>6 months</b><span>Service work</span><p>From the completion of the job.</p></div>
+        <div><b>2 months</b><span>Fork and shock seals</span><p>On seal kits from their use during a service.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>How to make a claim</h2>
+      <ol class="steps-list">
+        <li><b>Let us know right away</b>Report the defect without undue delay after you discover it: call <a href="tel:+420735150733">+420 735 150 733</a> or e-mail <a href="mailto:servis@picstop.cz">servis@picstop.cz</a>.</li>
+        <li><b>Bring the item to us</b>Deliver the item to our workshop at Na Lužci 226/10, 160 00 Prague 6. We will write up a claim report, which starts the claim process.</li>
+        <li><b>Resolved within 30 days</b>We will assess and settle the claim within 30 days of its start at the latest.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Exchange and return of goods</h2>
+      <p>You can exchange goods within 30 days of purchase. They must be undamaged, show no signs of use and be delivered to our workshop address.</p>
+    </section>
+
+    <section>
+      <h2>Purchase, pick-up and payment</h2>
+      <p>A purchase contract is concluded when the order is sent. We will confirm receipt of your order by e-mail without delay. Rights and obligations are governed by the laws of the Czech Republic.</p>
+      <p>Goods from the <a href="https://www.picstop-shop.cz" target="_blank" rel="noopener">PICSTOP e-shop</a> can only be picked up in person at the shop.</p>
+      <ul>
+        <li><strong>By card</strong> in person at the shop</li>
+        <li><strong>In cash</strong> in person at the shop</li>
+        <li><strong>By invoice</strong> in advance. The amount must be credited to our account before pick-up.</li>
+      </ul>
+    </section>
+
+    <p class="legal-date">The processing of personal data is described in a separate <a href="privacy.html">privacy policy</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> Zdeněk Oupic (PICSTOP) · Company ID 07735600 · Na Lužci 226/10, 160 00 Prague 6</span>
+    <span><a href="complaints.html">Complaints</a><a href="privacy.html">Privacy policy</a></span>
+    <p class="made">Website by <a href="mailto:patrik.fanta@gmail.com">Patrik Fanta</a></p>
+  </div>
+</footer>
+
+<script>
+const burger = document.querySelector('.burger'), menu = document.querySelector('.menu');
+burger.addEventListener('click', () => burger.setAttribute('aria-expanded', menu.classList.toggle('open')));
+document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
