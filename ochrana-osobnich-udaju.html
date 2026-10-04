@@ -73,13 +73,14 @@
       <ul>
         <li><strong>Google Ireland Ltd.</strong>: ukládání rezervací (Google Tabulky) a odesílání potvrzovacích e-mailů.</li>
         <li><strong>GitHub, Inc.</strong>: hosting tohoto webu. Při návštěvě webu zpracovává technické údaje, jako je IP adresa, v záznamech serveru.</li>
+        <li><strong>GoatCounter</strong>: anonymní měření návštěvnosti bez cookies a bez ukládání IP adres.</li>
       </ul>
       <p>Tito poskytovatelé mohou údaje zpracovávat i mimo EU, zejména v USA. Předání je v takovém případě zajištěno rámcem EU–USA pro ochranu údajů (Data Privacy Framework) nebo standardními smluvními doložkami schválenými Evropskou komisí.</p>
     </section>
 
     <section>
       <h2>Cookies a měření návštěvnosti</h2>
-      <p>Tento web nepoužívá cookies ani nástroje pro měření návštěvnosti a nesleduje tě. Písma jsou uložená přímo na našem webu, takže se kvůli nim nic neposílá třetím stranám.</p>
+      <p>Tento web nepoužívá cookies a nesleduje tě napříč weby. Návštěvnost měříme anonymně nástrojem GoatCounter, který neukládá cookies ani IP adresy. Vidíme jen souhrnná čísla, například kolik lidí si prohlédlo kterou stránku a odkud přišli. Písma jsou uložená přímo na našem webu, takže se kvůli nim nic neposílá třetím stranám.</p>
       <p>Mapa v sekci Kontakt pochází ze služby Google Maps a načte se až ve chvíli, kdy na ni klikneš. Teprve potom může Google zpracovávat údaje o tvé návštěvě podle svých <a href="https://policies.google.com/privacy?hl=cs" target="_blank" rel="noopener">zásad ochrany soukromí</a>. Odkazy na Instagram, Facebook a e-shop vedou na jiné weby s vlastními pravidly.</p>
     </section>
 
@@ -114,5 +115,7 @@ const burger = document.querySelector('.burger'), menu = document.querySelector(
 burger.addEventListener('click', () => burger.setAttribute('aria-expanded', menu.classList.toggle('open')));
 document.getElementById('y').textContent = new Date().getFullYear();
 </script>
+<!-- Anonymní měření návštěvnosti bez cookies (GoatCounter), skript hostovaný lokálně -->
+<script data-goatcounter="https://picstop.goatcounter.com/count" async src="js/count.js"></script>
 </body>
 </html>

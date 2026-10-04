@@ -74,13 +74,14 @@
       <ul>
         <li><strong>Google Ireland Ltd.</strong>: storing bookings (Google Sheets) and sending confirmation e-mails.</li>
         <li><strong>GitHub, Inc.</strong>: hosting this website. When you visit, it processes technical data such as your IP address in server logs.</li>
+        <li><strong>GoatCounter</strong>: anonymous visitor counting without cookies and without storing IP addresses.</li>
       </ul>
       <p>These providers may also process data outside the EU, in particular in the USA. Such transfers are covered by the EU–US Data Privacy Framework or by standard contractual clauses approved by the European Commission.</p>
     </section>
 
     <section>
       <h2>Cookies and analytics</h2>
-      <p>This website does not use cookies or any visitor tracking or analytics tools. Fonts are hosted on our own website, so nothing is sent to third parties because of them.</p>
+      <p>This website does not use cookies and does not track you across websites. We count visits anonymously with GoatCounter, which stores no cookies and no IP addresses. We only see aggregate numbers, such as how many people viewed which page and where they came from. Fonts are hosted on our own website, so nothing is sent to third parties because of them.</p>
       <p>The map in the Contact section comes from Google Maps and is only loaded when you click on it. Only then may Google process data about your visit under its <a href="https://policies.google.com/privacy?hl=en" target="_blank" rel="noopener">privacy policy</a>. Links to Instagram, Facebook and the e-shop lead to other websites with their own rules.</p>
     </section>
 
@@ -115,5 +116,7 @@ const burger = document.querySelector('.burger'), menu = document.querySelector(
 burger.addEventListener('click', () => burger.setAttribute('aria-expanded', menu.classList.toggle('open')));
 document.getElementById('y').textContent = new Date().getFullYear();
 </script>
+<!-- Anonymous cookie-free visitor counting (GoatCounter), script hosted locally -->
+<script data-goatcounter="https://picstop.goatcounter.com/count" async src="../js/count.js"></script>
 </body>
 </html>
