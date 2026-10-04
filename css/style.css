@@ -381,7 +381,11 @@ footer .made a{margin:0;color:var(--white);text-decoration:underline;text-decora
 }
 
 /* map placeholder: the Google map loads only after a click */
-.map-consent{display:flex;align-items:center;justify-content:center;filter:none;background:var(--black) radial-gradient(circle at 50% 40%,rgba(224,67,45,.18),transparent 60%);border:1px solid var(--line)}
+.map-consent{display:flex;align-items:center;justify-content:center;filter:none;position:relative;overflow:hidden;background:var(--black);border:1px solid var(--line)}
+.map-consent::before{content:"";position:absolute;inset:0;background:url(../img/mapa.jpg?v=1) center/cover;filter:grayscale(1) invert(.92) contrast(.9) brightness(.8)}
+.map-consent::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(11,11,12,.55),rgba(11,11,12,.88) 75%)}
+.map-inner{position:relative;z-index:1}
+.map-credit{position:absolute;right:8px;bottom:6px;z-index:1;font-size:.7rem;color:var(--muted)}
 .map-inner{text-align:center;padding:24px;max-width:420px}
 .map-inner svg{width:42px;height:42px;fill:var(--red);margin:0 auto 10px;display:block}
 .map-inner b{display:block;font-family:var(--display);font-style:italic;text-transform:uppercase;font-size:1.5rem;color:var(--white)}
@@ -406,3 +410,13 @@ footer .made a{margin:0;color:var(--white);text-decoration:underline;text-decora
 .legal-date{margin-top:48px;color:var(--muted);font-size:.9rem}
 .details .consent a{color:var(--white);text-decoration-color:var(--red)}
 @media (max-width:700px){.legal{padding:110px 0 72px}}
+.terms{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:6px}
+.terms div{background:var(--panel);border-top:5px solid var(--red);padding:22px}
+.terms b{display:block;font-family:var(--display);font-style:italic;font-weight:800;font-size:2.4rem;line-height:1;color:var(--white)}
+.terms span{display:block;font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;color:var(--red-text);margin:6px 0 8px}
+.terms p{font-size:.95rem;margin:0}
+.steps-list{list-style:none;counter-reset:s;padding:0;display:grid;gap:4px}
+.steps-list li{counter-increment:s;background:var(--panel);padding:20px 22px 20px 74px;position:relative;margin:0}
+.steps-list li::before{content:counter(s);position:absolute;left:22px;top:18px;font-family:var(--display);font-style:italic;font-weight:800;font-size:2rem;color:var(--red-text);line-height:1}
+.steps-list b{display:block;font-family:var(--display);font-style:italic;text-transform:uppercase;font-size:1.25rem;color:var(--white);margin-bottom:2px}
+@media (max-width:700px){.terms{grid-template-columns:1fr}}

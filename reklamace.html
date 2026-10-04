@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reklamace a záruka | PICSTOP</title>
+<meta name="description" content="Reklamační podmínky, záruční doby a obchodní podmínky cykloservisu PICSTOP.">
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="css/fonts.css?v=1">
+<link rel="stylesheet" href="css/style.css?v=11">
+</head>
+<body>
+
+<header id="top" class="scrolled">
+  <div class="wrap nav">
+    <a href="index.html" class="logo" aria-label="PICSTOP – úvod">
+      <img src="img/logo.png" alt="" width="44" height="44">
+      <span class="logo-text">PICSTOP</span>
+    </a>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <ul class="menu">
+      <li><a href="index.html#servis">Servis</a></li>
+      <li><a href="index.html#zavody">Závody</a></li>
+      <li><a href="index.html#cenik">Ceník</a></li>
+      <li><a href="index.html#test">Test centrum</a></li>
+      <li><a href="index.html#o-nas">O nás</a></li>
+      <li><a href="https://www.picstop-shop.cz" target="_blank" rel="noopener">E-shop</a></li>
+      <li><a href="index.html#kontakt">Kontakt</a></li>
+      <li><a href="rezervace.html" class="btn btn-red">Rezervace</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="legal">
+  <div class="wrap">
+    <div class="kicker">Obchodní podmínky</div>
+    <h1>Reklamace a záruka</h1>
+    <span class="bar"></span>
+    <p class="legal-lead">Když něco nefunguje, jak má, přivez to k nám a společně to vyřešíme. Níže najdeš, jak dlouho záruka platí a jak ji uplatnit.</p>
+
+    <section>
+      <h2>Prodávající</h2>
+      <p><strong>Zdeněk Oupic (PICSTOP)</strong>, IČ 07735600, se sídlem Na Lužci 226/10, 160 00 Praha 6. Při uzavírání a plnění smlouvy jedná v rámci své podnikatelské činnosti a dodává kupujícím zboží a služby.</p>
+      <p>Kupujícím je buď <strong>spotřebitel</strong>, tedy člověk, který nakupuje mimo svou podnikatelskou činnost, nebo <strong>podnikatel</strong>, který nakupuje v souvislosti se svým podnikáním či povoláním.</p>
+    </section>
+
+    <section>
+      <h2>Záruční doby</h2>
+      <div class="terms">
+        <div><b>24 měsíců</b><span>Zboží</span><p>Zákonná záruka ode dne nákupu. Nevztahuje se na běžné opotřebení způsobené používáním.</p></div>
+        <div><b>6 měsíců</b><span>Servisní práce</span><p>Od vyhotovení zakázky.</p></div>
+        <div><b>2 měsíce</b><span>Těsnění vidlic a tlumičů</span><p>Na těsnicí sady od jejich použití při servisu.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Jak uplatnit reklamaci</h2>
+      <ol class="steps-list">
+        <li><b>Ozvi se hned</b>Závadu nám oznam bez zbytečného odkladu po tom, co ji zjistíš: na <a href="tel:+420735150733">+420 735 150 733</a> nebo <a href="mailto:servis@picstop.cz">servis@picstop.cz</a>.</li>
+        <li><b>Přivez věc k nám</b>Reklamovanou věc doruč do provozovny Na Lužci 226/10, 160 00 Praha 6. Sepíšeme reklamační protokol a tím reklamace začne.</li>
+        <li><b>Vyřešíme do 30 dnů</b>Reklamaci posoudíme a vyřídíme nejpozději do 30 dnů od jejího zahájení.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Výměna a vrácení zboží</h2>
+      <p>Zboží můžeš vyměnit do 30 dnů od nákupu. Musí být nepoškozené a bez známek použití a je potřeba ho doručit na adresu provozovny.</p>
+    </section>
+
+    <section>
+      <h2>Nákup, vyzvednutí a platba</h2>
+      <p>Kupní smlouva vzniká odesláním objednávky. Přijetí objednávky ti neprodleně potvrdíme e-mailem. Práva a povinnosti se řídí právními předpisy České republiky.</p>
+      <p>Zboží z <a href="https://www.picstop-shop.cz" target="_blank" rel="noopener">e-shopu PICSTOP</a> si můžeš vyzvednout pouze osobně na prodejně.</p>
+      <ul>
+        <li><strong>Kartou</strong> osobně na prodejně</li>
+        <li><strong>V hotovosti</strong> osobně na prodejně</li>
+        <li><strong>Na fakturu</strong> předem. Při vyzvednutí už musí být částka připsaná na účtu.</li>
+      </ul>
+    </section>
+
+    <p class="legal-date">Zpracování osobních údajů popisují samostatné <a href="ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> PICSTOP – cykloservis pro náročné</span>
+    <span><a href="reklamace.html">Reklamace</a><a href="ochrana-osobnich-udaju.html">Ochrana osobních údajů</a></span>
+    <p class="made">Web vytvořil <a href="mailto:patrik.fanta@gmail.com">Patrik Fanta</a></p>
+  </div>
+</footer>
+
+<script>
+const burger = document.querySelector('.burger'), menu = document.querySelector('.menu');
+burger.addEventListener('click', () => burger.setAttribute('aria-expanded', menu.classList.toggle('open')));
+document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
