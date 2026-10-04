@@ -433,3 +433,11 @@ footer .made a{margin:0;color:var(--white);text-decoration:underline;text-decora
 }
 .legal-note{margin-top:18px;padding:10px 14px;border-left:4px solid var(--line);color:var(--muted)!important;font-size:.9rem}
 #service{scroll-margin-top:40px}
+/* keep the desktop menu on one line between tablet and wide screens */
+.menu a{white-space:nowrap}
+@media (min-width:961px) and (max-width:1200px){
+  .menu{gap:14px}
+  .menu a{font-size:1rem;letter-spacing:.02em}
+  .menu .btn{padding:8px 12px}
+  .logo-text{font-size:1.5rem}
+}
