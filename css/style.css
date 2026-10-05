@@ -441,3 +441,95 @@ footer .made a{margin:0;color:var(--white);text-decoration:underline;text-decora
   .menu .btn{padding:8px 12px}
   .logo-text{font-size:1.5rem}
 }
+
+/* ---------- test centre ---------- */
+.tc{padding:120px 0 90px}
+.tc section{padding:0}
+.tc-hero h1{font-size:clamp(3rem,7vw,5.5rem)}
+.tc-lead{color:#cfcfd2;max-width:640px;font-size:1.15rem}
+.tc-how{margin-top:56px}
+.tc-how h2,.tc-compare h2,.related h2{font-size:clamp(1.9rem,3.5vw,2.6rem);margin-bottom:20px}
+.tc-steps{grid-template-columns:repeat(3,1fr)}
+.tc-free{margin-top:16px;color:var(--white);font-weight:600}
+.tc-catalog{margin-top:64px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px}
+.chip{font-family:var(--display);font-weight:700;font-style:italic;text-transform:uppercase;font-size:1rem;letter-spacing:.03em;background:var(--panel);color:var(--white);border:1px solid var(--line);padding:7px 14px;cursor:pointer}
+.chip:hover{border-color:var(--red)}
+.chip.active{background:var(--white);color:var(--black);border-color:var(--white)}
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:4px}
+.prod-grid-sm{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.prod-card{background:var(--panel);text-decoration:none;display:flex;flex-direction:column;border-bottom:4px solid transparent;transition:border-color .15s,transform .15s}
+.prod-card:hover{border-color:var(--red);transform:translateY(-2px)}
+.prod-card[hidden]{display:none}
+.prod-img{background:#f2f2f0;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;padding:18px}
+.prod-img img{width:100%;height:100%;object-fit:contain}
+.prod-img-empty{background:repeating-linear-gradient(135deg,#1a1a1d 0 14px,#141416 14px 28px)}
+.prod-img-empty span{font-family:var(--display);font-style:italic;font-weight:800;text-transform:uppercase;font-size:1.6rem;color:var(--muted)}
+.prod-card-body{padding:18px 20px 20px;flex:1;display:flex;flex-direction:column;gap:6px}
+.prod-card-body small{font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;color:var(--red-text);letter-spacing:.04em}
+.prod-card-body h3{font-size:1.6rem}
+.prod-card-body p{color:#cfcfd2;font-size:.95rem}
+.prod-price{margin-top:auto;padding-top:8px;font-weight:600;color:var(--white)}
+.prod-tags{display:flex;flex-wrap:wrap;gap:4px}
+.prod-tags span{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);padding:2px 7px}
+.demo-badge{font-style:normal;font-family:var(--body);font-weight:600;font-size:.72rem;text-transform:none;letter-spacing:0;color:var(--black);background:var(--yellow);padding:1px 6px;margin-left:6px}
+.tc-compare{margin-top:72px}
+.table-scroll{overflow-x:auto}
+.compare{width:100%;border-collapse:collapse;min-width:680px;background:var(--panel)}
+.compare th,.compare td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);color:#cfcfd2;font-size:.95rem;vertical-align:top}
+.compare thead th{font-family:var(--display);font-style:italic;text-transform:uppercase;color:var(--red-text);font-size:1rem}
+.compare tbody th a{color:var(--white);font-weight:600;text-decoration-color:var(--red)}
+
+/* product page */
+.crumbs{font-size:.9rem;color:var(--muted);margin-bottom:26px}
+.crumbs a{color:var(--muted)}
+.crumbs span{color:var(--white)}
+.prod-top{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:start}
+.prod-img-lg{aspect-ratio:4/3;padding:32px}
+.prod-info h1{font-size:clamp(2.6rem,5vw,4rem)}
+.prod-short{font-size:1.15rem;color:#cfcfd2}
+.prod-facts{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:22px 0;background:var(--panel);padding:18px 20px}
+.prod-facts dt{font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;color:var(--red-text)}
+.prod-facts dd{color:var(--white);font-weight:600}
+.prod-info .prod-tags{margin-bottom:24px}
+.prod-detail{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;margin-top:56px}
+.prod-detail h2{font-size:2rem;margin:28px 0 12px}
+.prod-detail > div:last-child h2{margin-top:0}
+.prod-desc{font-size:1.08rem;color:#cfcfd2}
+.spec{display:grid;grid-template-columns:auto 1fr;background:var(--panel)}
+.spec dt,.spec dd{padding:11px 16px;border-bottom:1px solid var(--line)}
+.spec dt{color:var(--muted)}
+.spec dd{color:var(--white);font-weight:600}
+.rental{margin-top:72px;background:var(--panel);border-top:5px solid var(--red);padding:36px}
+.rental > h2{font-size:clamp(2rem,4vw,3rem)}
+.rental-pick{color:var(--muted);margin:6px 0 18px}
+.rental .demo-note{margin:0 0 20px}
+.rental-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.rental-grid[hidden]{display:none}
+.rental .calendar{background:var(--black)}
+.rental-variant{display:flex;flex-direction:column;gap:6px;font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;color:var(--white);margin-bottom:18px}
+.rental-variant select{font:500 1rem var(--body);text-transform:none;background:var(--black);color:var(--white);border:2px solid var(--line);padding:10px 12px}
+.rental-step{font-size:1.4rem}
+.rental-hint{color:var(--muted);font-size:.9rem;margin:4px 0 12px}
+.day.in-range{background:rgba(224,67,45,.28)}
+.day.busy{text-decoration:line-through;color:#55555b}
+.rental-summary{background:var(--black);padding:18px 20px;margin-bottom:16px}
+.rental-summary div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.rental-summary div:last-of-type{border-bottom:0}
+.rental-summary span{color:var(--muted)}
+.rental-summary b{color:var(--white)}
+.rental-price{font-family:var(--display);font-style:italic;font-size:1.6rem}
+.rental-next{color:var(--yellow);margin-top:8px;font-weight:500}
+.rental-error{color:#ff6b57;margin-top:8px;font-weight:500}
+.rental-form{padding:0;background:transparent}
+.rental-form .btn{justify-content:center}
+.rental-form .btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.rental-done{margin-top:8px}
+.related{margin-top:72px}
+@media (max-width:860px){
+  .tc-steps,.prod-top,.prod-detail,.rental-grid{grid-template-columns:1fr}
+  .rental{padding:22px 16px}
+}
+@media (max-width:700px){.tc{padding:100px 0 64px}}
+.test .hero-actions{margin-top:28px}
+.test .hero-actions .btn{margin-top:0}

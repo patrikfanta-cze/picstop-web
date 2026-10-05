@@ -1,7 +1,7 @@
 // Booking flow for PICSTOP: service → date/slot → details → confirm.
 // With API_URL empty the page runs as a demo (fake busy slots, nothing is sent).
 // Set API_URL to the deployed Google Apps Script web app (see apps-script/Code.gs) to go live.
-const API_URL = '';
+const API_URL = window.PICSTOP_API || ''; // set in js/config.js
 
 // Opening hours per weekday (0 = Sunday). Slots are hourly; the last one starts an hour before closing.
 const HOURS = {1: [11, 19], 2: [9, 17], 3: [9, 17], 4: [9, 17], 5: [11, 19]};
