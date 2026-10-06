@@ -8,7 +8,7 @@ const products = require('./test-produkty.js');
 
 const ROOT = path.join(__dirname, '..');
 const BASE = 'https://patrikfanta-cze.github.io/picstop-web/';
-const V = {css: 15, test: 1, cfg: 1};
+const V = {css: 16, test: 2, cfg: 1};
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const money = (n, en) => en ? `CZK ${n.toLocaleString('en-US')}` : `${n.toLocaleString('cs-CZ').replace(/ /g, ' ')} Kč`;
@@ -44,9 +44,16 @@ const L = {
   },
 };
 
+// Label for a price block: "3 hodiny", "1 den", "2 dny" / "3 hours", "1 day", "2 days"
+const tierLabel = (tier, en) => tier.hours
+  ? (en ? `${tier.hours} hours` : `${tier.hours} ${tier.hours < 5 ? "hodiny" : "hodin"}`)
+  : (en ? `${tier.days} ${tier.days === 1 ? "day" : "days"}` : `${tier.days} ${tier.days === 1 ? "den" : tier.days < 5 ? "dny" : "dní"}`);
+
 const pname = (p, en) => (en && p.nameEn) || p.name;
 const full = (p, en) => p.brand === 'PICSTOP' ? pname(p, en) : `${p.brand} ${pname(p, en)}`;
-const priceShort = (p, t, en) => p.price.day === 0
+const priceShort = (p, t, en) => p.price.tiers
+  ? `${t.from} ${money(Math.min(...p.price.tiers.map(x => x.price)), en)}`
+  : p.price.day === 0
   ? (p.maxDays === 7 ? t.freeWeek : t.free)
   : `${t.from} ${money(p.price.day, en)} / ${t.perDay}`;
 
@@ -228,10 +235,12 @@ function productPage(t, p) {
     rental: 'Zápůjčka', price: 'Cena', bookTitle: 'Rezervovat test', bookCta: 'Rezervovat test',
     related: 'Další produkty', pick: 'Vyzvednutí i vrácení v otevírací době (po a pá 11–19, út–čt 9–17).',
   };
-  const priceLine = p.price.day === 0 ? t.free
+  const priceLine = p.price.tiers ? p.price.tiers.map(x => `${tierLabel(x, en)} ${money(x.price, en)}`).join(" · ")
+    : p.price.day === 0 ? t.free
     : `${money(p.price.day, en)} / ${t.perDay} · ${money(p.price.week, en)} / ${t.perWeek}`;
   const data = {
     id: p.id, name: full(p, false), label: full(p, en), variants: p.variants,
+    tiers: p.price.tiers ? p.price.tiers.map(x => ({...x, label: tierLabel(x, en)})) : null,
     price: p.price, deposit: p.deposit, maxDays: p.maxDays, demo: !!p.demo,
   };
   const related = products.filter(o => o.id !== p.id && o.cat === p.cat).slice(0, 4);
@@ -250,9 +259,10 @@ function productPage(t, p) {
         ${p.demo ? `<p class="demo-note">${t.demoNote}</p>` : ''}
         <dl class="prod-facts">
           <dt>${T.price}</dt><dd>${esc(priceLine)}</dd>
-          <dt>${t.deposit}</dt><dd>${esc(money(p.deposit, en))}</dd>
-          <dt>${T.rental}</dt><dd>${esc(t.maxDays(p.maxDays))}</dd>
+${p.deposit != null ? `          <dt>${t.deposit}</dt><dd>${esc(money(p.deposit, en))}</dd>
+` : ""}          <dt>${T.rental}</dt><dd>${esc(p.price.tiers ? p.price.tiers.map(x => tierLabel(x, en)).join(" / ") : t.maxDays(p.maxDays))}</dd>
         </dl>
+        ${d.note ? `<p class="prod-note">${esc(d.note)}</p>` : ""}
         <div class="prod-tags">${p.use.map(u => `<span>${t.uses[u]}</span>`).join('')}${p.women ? `<span>${t.women}</span>` : ''}</div>
         <a href="#rezervace" class="btn btn-red">${T.bookCta}</a>
       </div>

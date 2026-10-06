@@ -38,6 +38,8 @@ const T = EN ? {
   months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
   days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
   dow: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+  length: 'Test length', startTime: 'Start time', tierHint: 'Click the day you want to test. The return is set automatically.',
+  retClosed: 'The return would fall on a day we are closed or that is taken. Please choose another day.', noTime: 'No free start time left that day.',
   version: 'Version', step1: 'Pick-up and return', hint: 'Click the pick-up day, then the return day. Crossed-out days are taken.',
   pickup: 'Pick-up', ret: 'Return', choosePickup: 'Choose the pick-up day', chooseReturn: 'Now choose the return day',
   days1: 'day', daysN: 'days', price: 'Price', free: 'Free', deposit: 'Refundable deposit (cash at pick-up)',
@@ -53,6 +55,8 @@ const T = EN ? {
   months: ['leden', 'únor', 'březen', 'duben', 'květen', 'červen', 'červenec', 'srpen', 'září', 'říjen', 'listopad', 'prosinec'],
   days: ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'],
   dow: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'],
+  length: 'Délka testu', startTime: 'Začátek testu', tierHint: 'Klikni na den, kdy chceš testovat. Vrácení se nastaví samo.',
+  retClosed: 'Vrácení by vyšlo na den, kdy máme zavřeno nebo je obsazeno. Vyber prosím jiný den.', noTime: 'Ten den už není volný žádný začátek.',
   version: 'Verze', step1: 'Vyzvednutí a vrácení', hint: 'Klikni na den vyzvednutí a potom na den vrácení. Přeškrtnuté dny jsou obsazené.',
   pickup: 'Vyzvednutí', ret: 'Vrácení', choosePickup: 'Vyber den vyzvednutí', chooseReturn: 'Teď vyber den vrácení',
   days1: 'den', daysN: 'dní', days2: 'dny', price: 'Cena', free: 'Zdarma', deposit: 'Vratná záloha (v hotovosti při vyzvednutí)',
@@ -81,7 +85,24 @@ function priceFor(days) {
   return Math.floor(days / 7) * week + Math.min((days % 7) * day, week);
 }
 
-const state = {variant: P.variants[0] || '', from: null, to: null, view: null, busy: []};
+// Block pricing (e.g. wheels: 3 hours / 1 day / 2 days): pick a block, then the pick-up day; return is computed
+const TIERS = P.tiers || null;
+const state = {variant: P.variants[0] || '', from: null, to: null, view: null, busy: [],
+  tier: TIERS ? Math.min(1, TIERS.length - 1) : 0, hour: null};
+const tier = () => TIERS && TIERS[state.tier];
+
+// Start hours for an hours-long test on day d: within opening hours, ending by closing time, not in the past
+function startHours(d) {
+  const h = HOURS[d.getDay()];
+  if (!h || !tier()?.hours) return [];
+  const now = pragueNow();
+  const out = [];
+  for (let x = h[0]; x + tier().hours <= h[1]; x++) {
+    if (ymd(d) === ymd(now) && x <= now.getHours()) continue;
+    out.push(x);
+  }
+  return out;
+}
 const key = () => P.id + (state.variant ? '|' + state.variant : '');
 
 /* availability: list of {key, from, to} (inclusive dates as YYYY-MM-DD) */
@@ -119,6 +140,7 @@ function canBeEndpoint(d) {
   const h = HOURS[d.getDay()];
   if (!h) return false;
   if (ymd(d) === ymd(t) && now.getHours() >= h[1] - 1) return false; // too late to pick up today
+  if (tier()?.hours && !startHours(d).length) return false;
   return !isBusy(d);
 }
 function rangeFree(a, b) {
@@ -132,8 +154,9 @@ root.innerHTML = `
   <div class="rental-grid">
     <div>
       ${P.variants.length ? `<label class="rental-variant">${T.version}<select id="variant">${P.variants.map(v => `<option>${v}</option>`).join('')}</select></label>` : ''}
+      ${TIERS ? `<div class="rental-variant">${T.length}<div class="tier-chips" role="radiogroup">${TIERS.map((x, i) => `<button type="button" class="chip tier${i === state.tier ? ' active' : ''}" data-tier="${i}" role="radio" aria-checked="${i === state.tier}">${x.label} · ${money(x.price)}</button>`).join('')}</div></div>` : ''}
       <h3 class="rental-step">${T.step1}</h3>
-      <p class="rental-hint">${T.hint}</p>
+      <p class="rental-hint">${TIERS ? T.tierHint : T.hint}</p>
       <div class="calendar">
         <div class="cal-head">
           <button class="cal-nav" id="cal-prev" type="button" aria-label="${T.prev}">‹</button>
@@ -180,7 +203,9 @@ function renderCalendar() {
     b.textContent = n;
     const busy = d >= t && isBusy(d);
     b.classList.toggle('busy', busy);
-    b.disabled = !canBeEndpoint(d);
+    // with block pricing, a day is only selectable if the computed return day works too
+    const end = TIERS ? addDays(d, tier().days) : d;
+    b.disabled = !canBeEndpoint(d) || (TIERS && tier().days > 0 && (!canBeEndpoint(end) || !rangeFree(d, end)));
     if (ymd(d) === ymd(t)) b.classList.add('today');
     if (state.from && ymd(d) === ymd(state.from)) b.classList.add('selected', 'edge');
     if (state.to && ymd(d) === ymd(state.to)) b.classList.add('selected', 'edge');
@@ -193,6 +218,12 @@ function renderCalendar() {
 let error = '';
 function pick(d) {
   error = '';
+  if (TIERS) {
+    const end = addDays(d, tier().days);
+    if (tier().days && (!canBeEndpoint(end) || !rangeFree(d, end))) { state.from = state.to = null; error = T.retClosed; }
+    else { state.from = d; state.to = end; state.hour = tier().hours ? startHours(d)[0] : null; }
+    renderCalendar(); renderSummary(); return;
+  }
   if (!state.from || state.to || d <= state.from) {
     state.from = d; state.to = null;
   } else if (diffDays(state.from, d) > P.maxDays) {
@@ -211,16 +242,24 @@ function renderSummary() {
   const rows = [];
   rows.push(`<div><span>${T.pickup}</span><b>${state.from ? dateLabel(state.from) : '—'}</b></div>`);
   rows.push(`<div><span>${T.ret}</span><b>${state.to ? dateLabel(state.to) : '—'}</b></div>`);
-  if (state.from && state.to) {
+  if (state.from && state.to && TIERS) {
+    if (tier().hours) {
+      const hrs = startHours(state.from);
+      rows.push(`<div><span>${T.startTime}</span><b><select id="hour">${hrs.map(x => `<option value="${x}"${x === state.hour ? ' selected' : ''}>${x}:00–${x + tier().hours}:00</option>`).join('')}</select></b></div>`);
+    }
+    rows.push(`<div><span>${tier().label}</span><b class="rental-price">${money(tier().price)}</b></div>`);
+    if (P.deposit != null) rows.push(`<div><span>${T.deposit}</span><b>${money(P.deposit)}</b></div>`);
+  } else if (state.from && state.to) {
     const days = diffDays(state.from, state.to);
     const price = priceFor(days);
     rows.push(`<div><span>${days} ${dayWord(days)}</span><b class="rental-price">${price === 0 ? T.free : money(price)}</b></div>`);
-    rows.push(`<div><span>${T.deposit}</span><b>${money(P.deposit)}</b></div>`);
+    if (P.deposit != null) rows.push(`<div><span>${T.deposit}</span><b>${money(P.deposit)}</b></div>`);
   } else {
     rows.push(`<p class="rental-next">${state.from ? T.chooseReturn : T.choosePickup}</p>`);
   }
   if (error) rows.push(`<p class="rental-error" role="alert">${error}</p>`);
   s.innerHTML = rows.join('');
+  $('#hour')?.addEventListener('change', e => { state.hour = Number(e.target.value); });
   $('#rental-send').disabled = !(state.from && state.to);
 }
 
@@ -241,9 +280,12 @@ async function submit(e) {
   if (!(state.from && state.to) || !valid()) return;
   const f = new FormData($('#rental-form'));
   const days = diffDays(state.from, state.to);
+  const tr = tier();
   const booking = {
     type: 'test', productId: P.id, product: P.name, variant: state.variant,
-    from: ymd(state.from), to: ymd(state.to), days, price: priceFor(days), deposit: P.deposit,
+    from: ymd(state.from), to: ymd(state.to), days,
+    price: tr ? tr.price : priceFor(days), deposit: P.deposit,
+    ...(tr?.hours ? {hours: tr.hours, time: `${pad(state.hour)}:00`} : {}),
     name: f.get('name').trim(), phone: f.get('phone').trim(), email: f.get('email').trim(),
     message: f.get('message').trim(), lang: EN ? 'en' : 'cs',
   };
@@ -257,7 +299,9 @@ async function submit(e) {
       const res = await r.json();
       if (!res.ok) throw new Error(res.error || T.failed);
     }
-    const when = EN ? `${dateLabel(state.from)} to ${dateLabel(state.to)}` : `od ${dateLabel(state.from)} do ${dateLabel(state.to)}`;
+    const when = booking.hours
+      ? `${dateLabel(state.from)} ${state.hour}:00–${state.hour + booking.hours}:00`
+      : EN ? `${dateLabel(state.from)} to ${dateLabel(state.to)}` : `od ${dateLabel(state.from)} do ${dateLabel(state.to)}`;
     $('#rental-done-text').textContent = API_URL ? T.done(when, booking.email) : T.doneDemo(when, booking.email);
     $('.rental-grid').hidden = true;
     $('#rental-done').hidden = false;
@@ -277,6 +321,11 @@ async function submit(e) {
   state.view = new Date(t.getFullYear(), t.getMonth(), 1);
   renderCalendar();
   renderSummary();
+  $$('.tier').forEach(b => b.addEventListener('click', () => {
+    state.tier = Number(b.dataset.tier); state.from = state.to = null; error = '';
+    $$('.tier').forEach(x => { x.classList.toggle('active', x === b); x.setAttribute('aria-checked', x === b); });
+    renderCalendar(); renderSummary();
+  }));
   $('#variant')?.addEventListener('change', e => { state.variant = e.target.value; state.from = state.to = null; error = ''; renderCalendar(); renderSummary(); });
   $('#cal-prev').addEventListener('click', () => { state.view.setMonth(state.view.getMonth() - 1); renderCalendar(); });
   $('#cal-next').addEventListener('click', () => { state.view.setMonth(state.view.getMonth() + 1); renderCalendar(); });

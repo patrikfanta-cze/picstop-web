@@ -146,7 +146,9 @@ function handleTest(b) {
 
   const from = new Date(b.from + 'T12:00:00'), to = new Date(b.to + 'T12:00:00');
   const days = Math.round((to - from) / 86400000);
-  if (days < 1 || days > MAX_TEST_DAYS) return json({ok: false, error: 'Neplatná délka zápůjčky'});
+  const hours = Number(b.hours) || 0; // short same-day test (e.g. wheels for 3 hours)
+  if (hours && (days !== 0 || !/^\d{2}:00$/.test(b.time || ''))) return json({ok: false, error: 'Neplatný termín'});
+  if (!hours && (days < 1 || days > MAX_TEST_DAYS)) return json({ok: false, error: 'Neplatná délka zápůjčky'});
   if (!HOURS[from.getDay()] || !HOURS[to.getDay()]) return json({ok: false, error: 'Vyzvednutí i vrácení musí být v otevírací den'});
 
   const key = b.productId + (b.variant ? '|' + b.variant : '');
@@ -159,37 +161,50 @@ function handleTest(b) {
     b.name, b.phone, b.email, (b.message || '').slice(0, 2000), b.lang || 'cs', 'nová',
   ]);
 
-  const period = `${czDate(b.from)} – ${czDate(b.to)} (${days} dní)`;
+  const hourEnd = hours ? `${String(Number(b.time.slice(0, 2)) + hours).padStart(2, '0')}:00` : '';
+  const period = hours ? `${czDate(b.from)} ${b.time}–${hourEnd} (${hours} h)` : `${czDate(b.from)} – ${czDate(b.to)} (${days} dní)`;
   const price = Number(b.price) ? `${b.price} Kč` : 'zdarma';
-  const details = `Produkt: ${product}\nVyzvednutí: ${czDate(b.from)}\nVrácení: ${czDate(b.to)}\nDélka: ${days} dní\nCena: ${price}\nZáloha: ${b.deposit} Kč\n\nJméno: ${b.name}\nTelefon: ${b.phone}\nE-mail: ${b.email}\n\n${b.message || ''}`;
+  const deposit = b.deposit == null ? 'dle domluvy' : `${b.deposit} Kč`;
+  const when = hours ? `Test: ${period}` : `Vyzvednutí: ${czDate(b.from)}\nVrácení: ${czDate(b.to)}\nDélka: ${days} dní`;
+  const details = `Produkt: ${product}\n${when}\nCena: ${price}\nZáloha: ${deposit}\n\nJméno: ${b.name}\nTelefon: ${b.phone}\nE-mail: ${b.email}\n\n${b.message || ''}`;
   const uid = `test-${b.productId}-${b.from}-${b.phone}`.replace(/[^\w-]/g, '');
-  const ics = calendar([
-    {uid: uid + '-pickup', date: b.from, summary: `Test – vyzvednutí: ${product}, ${b.name}`, description: details},
-    {uid: uid + '-return', date: b.to, summary: `Test – vrácení: ${product}, ${b.name}`, description: details},
-  ]);
+  const start = hours ? Utilities.parseDate(`${b.from} ${b.time}`, TZ, 'yyyy-MM-dd HH:mm') : null;
+  const end = hours ? new Date(start.getTime() + hours * 3600000) : null;
+  const ics = calendar(hours
+    ? [{uid, start, end, summary: `Test ${hours} h: ${product}, ${b.name}`, description: details}]
+    : [
+      {uid: uid + '-pickup', date: b.from, summary: `Test – vyzvednutí: ${product}, ${b.name}`, description: details},
+      {uid: uid + '-return', date: b.to, summary: `Test – vrácení: ${product}, ${b.name}`, description: details},
+    ]);
 
   MailApp.sendEmail({
     to: NOTIFY_EMAIL,
     replyTo: b.email,
     subject: `Nová zápůjčka: ${product} – ${b.name}, ${period}${b.lang === 'en' ? ' (EN)' : ''}`,
-    body: `${details}\n\nV příloze je pozvánka do kalendáře (vyzvednutí a vrácení, rezervace.ics) a kontaktní karta zákazníka (kontakt.vcf).`,
+    body: `${details}\n\nV příloze je pozvánka do kalendáře (rezervace.ics) a kontaktní karta zákazníka (kontakt.vcf).`,
     attachments: [icsBlob(ics), vcardBlob(b, `Test ${product}, ${period}`)],
   });
 
   const en = b.lang === 'en';
   const enDate = ymd => ymd.split('-').reverse().join('/');
-  const customerIcs = calendar([
-    {uid: uid + '-pickup', date: b.from, summary: `${SHOP} – ${en ? 'pick up' : 'vyzvednutí'}: ${product}`, description: `${SHOP}, ${SHOP_ADDRESS}, ${SHOP_PHONE}`},
-    {uid: uid + '-return', date: b.to, summary: `${SHOP} – ${en ? 'return' : 'vrácení'}: ${product}`, description: `${SHOP}, ${SHOP_ADDRESS}, ${SHOP_PHONE}`},
-  ]);
+  const shopInfo = `${SHOP}, ${SHOP_ADDRESS}, ${SHOP_PHONE}`;
+  const customerIcs = calendar(hours
+    ? [{uid, start, end, summary: `${SHOP} – test: ${product}`, description: shopInfo}]
+    : [
+      {uid: uid + '-pickup', date: b.from, summary: `${SHOP} – ${en ? 'pick up' : 'vyzvednutí'}: ${product}`, description: shopInfo},
+      {uid: uid + '-return', date: b.to, summary: `${SHOP} – ${en ? 'return' : 'vrácení'}: ${product}`, description: shopInfo},
+    ]);
+  const whenEn = hours ? `Test: ${enDate(b.from)} ${b.time}–${hourEnd}` : `Pick-up: ${enDate(b.from)}\nReturn: ${enDate(b.to)}`;
+  const depositEn = b.deposit == null ? 'agreed at pick-up' : `CZK ${b.deposit}`;
+  const whenCs = hours ? `Test: ${period}` : `Vyzvednutí: ${czDate(b.from)}\nVrácení: ${czDate(b.to)}`;
   MailApp.sendEmail({
     to: b.email,
     replyTo: NOTIFY_EMAIL,
     name: SHOP,
     subject: en ? `Test booking confirmed – ${product}` : `Potvrzení zápůjčky – ${product}`,
     body: en
-      ? `Hello,\n\nthank you for your booking. Your test is confirmed:\n\nProduct: ${product}\nPick-up: ${enDate(b.from)}\nReturn: ${enDate(b.to)}\nPrice: ${Number(b.price) ? 'CZK ' + b.price : 'free'}\nRefundable deposit (cash at pick-up): CZK ${b.deposit}\n\nPick-up and return during opening hours (Mon and Fri 11–19, Tue–Thu 9–17) at ${SHOP_ADDRESS}, Czech Republic.\nIf your plans change, please let us know at ${SHOP_PHONE} or reply to this e-mail.\n\n${SHOP} – bike service for demanding riders`
-      : `Dobrý den,\n\ndíky za rezervaci. Zápůjčka je potvrzená:\n\nProdukt: ${product}\nVyzvednutí: ${czDate(b.from)}\nVrácení: ${czDate(b.to)}\nCena: ${price}\nVratná záloha (v hotovosti při vyzvednutí): ${b.deposit} Kč\n\nVyzvednutí i vrácení v otevírací době (po a pá 11–19, út–čt 9–17) na adrese ${SHOP_ADDRESS}.\nPokud se vám plány změní, dejte nám prosím vědět na ${SHOP_PHONE} nebo odpovědí na tento e-mail.\n\n${SHOP} – cykloservis pro náročné`,
+      ? `Hello,\n\nthank you for your booking. Your test is confirmed:\n\nProduct: ${product}\n${whenEn}\nPrice: ${Number(b.price) ? 'CZK ' + b.price : 'free'}\nRefundable deposit (cash at pick-up): ${depositEn}\n\nPick-up and return during opening hours (Mon and Fri 11–19, Tue–Thu 9–17) at ${SHOP_ADDRESS}, Czech Republic.\nIf your plans change, please let us know at ${SHOP_PHONE} or reply to this e-mail.\n\n${SHOP} – bike service for demanding riders`
+      : `Dobrý den,\n\ndíky za rezervaci. Zápůjčka je potvrzená:\n\nProdukt: ${product}\n${whenCs}\nCena: ${price}\nVratná záloha (v hotovosti při vyzvednutí): ${deposit}\n\nVyzvednutí i vrácení v otevírací době (po a pá 11–19, út–čt 9–17) na adrese ${SHOP_ADDRESS}.\nPokud se vám plány změní, dejte nám prosím vědět na ${SHOP_PHONE} nebo odpovědí na tento e-mail.\n\n${SHOP} – cykloservis pro náročné`,
     attachments: [icsBlob(customerIcs)],
   });
   return json({ok: true});

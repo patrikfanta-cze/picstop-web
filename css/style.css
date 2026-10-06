@@ -533,3 +533,7 @@ footer .made a{margin:0;color:var(--white);text-decoration:underline;text-decora
 @media (max-width:700px){.tc{padding:100px 0 64px}}
 .test .hero-actions{margin-top:28px}
 .test .hero-actions .btn{margin-top:0}
+.tier-chips{display:flex;flex-wrap:wrap;gap:6px;text-transform:none}
+.chip.tier{font-size:.95rem}
+.prod-note{background:rgba(70,211,107,.08);border-left:4px solid #46d36b;padding:10px 14px;color:var(--white);margin:-8px 0 20px;font-size:.95rem}
+.rental-summary select{font:600 1rem var(--body);background:var(--panel);color:var(--white);border:1px solid var(--line);padding:4px 8px}

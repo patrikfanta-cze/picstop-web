@@ -193,22 +193,30 @@ module.exports = [
     demo: true,
   },
   {
-    id: 'karbonova-kola',
-    cat: 'kola', brand: 'PICSTOP', name: 'Karbonová zapletená kola', nameEn: 'Carbon wheelset', img: null,
-    use: ['silnice', 'triatlon'],
+    // Data from https://www.picstop.cz/test-centrum/karbonova-kola/ (October 2026); photo from picstop.cz
+    id: 'ffwd-tyro',
+    cat: 'kola', brand: 'FFWD', name: 'Tyro 2.0', img: 'karbon-tyro.jpg',
+    use: ['silnice', 'gravel'],
     variants: [],
-    specs: {cs: {'Typ': 'karbonový pár kol'}, en: {'Type': 'carbon wheelset'}},
+    specs: {
+      cs: {'Typ': 'karbonový pár kol', 'Ráfek': 'nově vyvinutý, rozšířený pro moderní pláště', 'Náboje': 'FFWD, systém star-ratchet od DT Swiss', 'Ložiska': 'průmyslová', 'Dráty': 'Sapim Sprint, straightpull', 'Nipple': 'mosazné', 'Použití': 'silnice a light-gravel'},
+      en: {'Type': 'carbon wheelset', 'Rim': 'newly developed, wider for modern tyres', 'Hubs': 'FFWD with the DT Swiss star-ratchet system', 'Bearings': 'industrial', 'Spokes': 'Sapim Sprint, straight-pull', 'Nipples': 'brass', 'Use': 'road and light gravel'},
+    },
     cs: {
-      short: 'Vyzkoušej rozdíl karbonových kol na vlastním kole.',
-      desc: 'Zapletená karbonová kola k otestování na tvém vlastním kole. Poradíme s výběrem a kola ti připravíme a namontujeme.',
-      fit: ['Silnice a triatlon', 'Jezdci, kteří zvažují upgrade kol'],
+      short: 'Bytelná karbonová kola na silnici i lehký gravel.',
+      desc: 'Karbonová kola Tyro 2.0 mají zcela nově vyvinutý a rozšířený ráfek, který odpovídá požadavkům na moderní obutí. Náboje jsou z produkce FFWD se známým systémem star-ratchet od DT Swiss a s průmyslovými ložisky. Výplet tvoří straightpull dráty Sapim Sprint s mosaznými nipply, které zajišťují potřebnou tuhost a trvanlivost. Kola jsou velmi bytelná a použitelná na silnici i light-gravel.',
+      fit: ['Silnice i lehký gravel', 'Jezdci, kteří zvažují upgrade na karbonová kola', 'Kdo chce bytelná kola na každodenní ježdění'],
+      note: 'Cenu půjčovného ti odečteme z ceny zápletů, pokud si kola pak koupíš.',
     },
     en: {
-      short: 'Feel the difference of carbon wheels on your own bike.',
-      desc: 'Carbon wheelsets to test on your own bike. We help you choose, prepare the wheels and fit them for you.',
-      fit: ['Road and triathlon', 'Riders considering a wheel upgrade'],
+      short: 'Durable carbon wheels for road and light gravel.',
+      desc: 'The Tyro 2.0 carbon wheels have a completely newly developed, wider rim that meets the needs of modern tyres. The hubs are made by FFWD with the well-known DT Swiss star-ratchet system and industrial bearings. They are laced with straight-pull Sapim Sprint spokes and brass nipples for the required stiffness and durability. The wheels are very sturdy and suitable for road and light gravel.',
+      fit: ['Road and light gravel', 'Riders considering an upgrade to carbon wheels', 'Anyone who wants sturdy wheels for everyday riding'],
+      note: 'If you then buy the wheels, we deduct the rental price from the price of the wheelset.',
     },
-    price: {day: 400, week: 1500}, deposit: 10000, maxDays: 14,
-    demo: true,
+    // Priced per block: a 3-hour test on one day, or 1 / 2 days
+    price: {tiers: [{hours: 3, days: 0, price: 490}, {days: 1, price: 990}, {days: 2, price: 1690}]},
+    deposit: null, maxDays: 2,
+    verify: 'Záloha u kol není na picstop.cz uvedená – zeptat se. Počet sad k zapůjčení?',
   },
 ];
