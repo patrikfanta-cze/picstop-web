@@ -537,3 +537,22 @@ footer .made a{margin:0;color:var(--white);text-decoration:underline;text-decora
 .chip.tier{font-size:.95rem}
 .prod-note{background:rgba(70,211,107,.08);border-left:4px solid #46d36b;padding:10px 14px;color:var(--white);margin:-8px 0 20px;font-size:.95rem}
 .rental-summary select{font:600 1rem var(--body);background:var(--panel);color:var(--white);border:1px solid var(--line);padding:4px 8px}
+
+/* ---------- Google review strip (between pillars and "Proč PICSTOP") ---------- */
+.reviews{padding:56px 0 8px}
+.rs-head{font-family:var(--display);font-weight:700;font-style:italic;text-transform:uppercase;letter-spacing:.06em;font-size:1.05rem;color:var(--muted);margin-bottom:16px}
+.rs-head .rs-stars{color:var(--yellow);letter-spacing:2px;margin-right:8px}
+.rs-head b{color:var(--white);font-size:1.2rem}
+.rs-head a{color:var(--white);text-decoration-color:var(--red);text-underline-offset:3px}
+.rs-head a:hover{color:var(--red-text)}
+.rs-viewport{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.rs-track{display:flex;gap:4px;width:max-content;padding:2px 0 6px}
+.rs-viewport.is-looping{cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.rs-viewport.is-looping .rs-track{will-change:transform}
+.rs-viewport.is-dragging{cursor:grabbing}
+.rs-card{flex:0 0 auto;width:330px;margin:0;background:var(--panel);border-top:4px solid var(--red);padding:18px 20px 16px}
+.rs-card .rs-stars{color:var(--yellow);letter-spacing:2px;font-size:.9rem}
+.rs-card blockquote{margin:8px 0 10px;font-size:1.05rem;line-height:1.45;color:var(--white)}
+.rs-card figcaption{font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:.9rem;color:var(--muted)}
+@media (max-width:700px){.reviews{padding:44px 0 4px}.rs-card{width:270px;padding:16px}.rs-card blockquote{font-size:1rem}}
+@media (prefers-reduced-motion:reduce){.rs-viewport{overflow-x:auto}}

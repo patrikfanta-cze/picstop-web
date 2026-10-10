@@ -8,7 +8,7 @@ const products = require('./test-produkty.js');
 
 const ROOT = path.join(__dirname, '..');
 const BASE = 'https://patrikfanta-cze.github.io/picstop-web/';
-const V = {css: 16, test: 2, cfg: 1};
+const V = {css: 17, test: 2, cfg: 1};
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const money = (n, en) => en ? `CZK ${n.toLocaleString('en-US')}` : `${n.toLocaleString('cs-CZ').replace(/ /g, ' ')} Kč`;

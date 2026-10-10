@@ -22,6 +22,67 @@ document.getElementById('map-load').addEventListener('click', () => {
   document.getElementById('map').replaceWith(f);
 });
 
+// Google review strip: drifts on its own, can be grabbed and flung with mouse or finger (same as salon-kf)
+const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.querySelectorAll('.rs-track').forEach(track => {
+  if (reduceMotion) return;
+  [...track.children].forEach(card => {
+    const c = card.cloneNode(true);
+    c.setAttribute('aria-hidden', 'true');
+    track.appendChild(c);
+  });
+  const vp = track.parentElement;
+  vp.classList.add('is-looping');
+  const SPEED = 35; // px per second
+  let half = track.scrollWidth / 2, x = -half, vel = 0, last = 0;
+  let hover = false, drag = null, moved = false;
+  const wrap = () => { while (x >= 0) x -= half; while (x < -half) x += half; };
+  addEventListener('resize', () => { half = track.scrollWidth / 2; wrap(); });
+  function frame(t) {
+    const dt = last ? Math.min((t - last) / 1000, .05) : 0;
+    last = t;
+    if (!drag) {
+      if (Math.abs(vel) > 5) { x += vel * dt; vel *= Math.pow(.05, dt); }
+      else { vel = 0; if (!hover) x += SPEED * dt; }
+    }
+    wrap();
+    track.style.transform = `translateX(${x.toFixed(1)}px)`;
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+  vp.addEventListener('mouseenter', () => { hover = true; });
+  vp.addEventListener('mouseleave', () => { hover = false; });
+  vp.addEventListener('dragstart', e => e.preventDefault());
+  vp.addEventListener('pointerdown', e => {
+    if (e.button !== 0) return;
+    if (e.pointerType === 'mouse') e.preventDefault(); // otherwise text gets selected
+    drag = {id: e.pointerId, startX: e.clientX, lastX: e.clientX, lastT: e.timeStamp};
+    moved = false; vel = 0;
+  });
+  vp.addEventListener('pointermove', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const dx = e.clientX - drag.lastX;
+    if (!moved && Math.abs(e.clientX - drag.startX) > 6) {
+      moved = true;
+      vp.classList.add('is-dragging');
+      vp.setPointerCapture(e.pointerId);
+    }
+    if (moved) {
+      vel = vel * .6 + (dx / Math.max(e.timeStamp - drag.lastT, 1) * 1000) * .4;
+      x += dx;
+    }
+    drag.lastX = e.clientX; drag.lastT = e.timeStamp;
+  });
+  const end = e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    drag = null;
+    vp.classList.remove('is-dragging');
+    if (e.type === 'pointercancel') vel = 0;
+  };
+  vp.addEventListener('pointerup', end);
+  vp.addEventListener('pointercancel', end);
+});
+
 // mobile menu
 const burger = document.querySelector('.burger'), menu = document.querySelector('.menu');
 burger.addEventListener('click', () => {
