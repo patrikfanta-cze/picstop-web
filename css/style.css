@@ -556,3 +556,5 @@ footer .made a{margin:0;color:var(--white);text-decoration:underline;text-decora
 .rs-card figcaption{font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:.9rem;color:var(--muted)}
 @media (max-width:700px){.reviews{padding:44px 0 4px}.rs-card{width:270px;padding:16px}.rs-card blockquote{font-size:1rem}}
 @media (prefers-reduced-motion:reduce){.rs-viewport{overflow-x:auto}}
+.reviews + .intro{padding-top:55px}
+@media (max-width:700px){.reviews + .intro{padding-top:36px}}
