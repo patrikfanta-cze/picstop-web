@@ -8,7 +8,7 @@ const products = require('./test-produkty.js');
 
 const ROOT = path.join(__dirname, '..');
 const BASE = 'https://patrikfanta-cze.github.io/picstop-web/';
-const V = {css: 18, test: 2, cfg: 1};
+const V = {css: 19, test: 2, cfg: 1};
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const money = (n, en) => en ? `CZK ${n.toLocaleString('en-US')}` : `${n.toLocaleString('cs-CZ').replace(/ /g, ' ')} Kč`;
@@ -168,7 +168,7 @@ function catalog(t) {
     .map(([k, v], i) => `<button type="button" class="chip${i === 0 ? ' active' : ''}" data-filter="${k}">${esc(v)}</button>`).join('');
 
   const body = `<main class="tc">
-  <section class="tc-hero">
+  <section class="tc-hero tc-band tc-first">
     <div class="wrap">
       <div class="kicker">${T.kicker}</div>
       <h1>${T.h1}</h1>
@@ -177,7 +177,7 @@ function catalog(t) {
     </div>
   </section>
 
-  <section class="tc-how">
+  <section class="tc-how tc-band tc-gray">
     <div class="wrap">
       <h2>${T.how}</h2>
       <ol class="steps-list tc-steps">
@@ -187,7 +187,7 @@ ${T.steps.map(([h, p]) => `        <li><b>${h}</b>${p}</li>`).join('\n')}
     </div>
   </section>
 
-  <section class="tc-catalog" id="katalog">
+  <section class="tc-catalog tc-band" id="katalog">
     <div class="wrap">
       <div class="chips" role="group" aria-label="${T.filter}">${chips}</div>
       <div class="prod-grid" id="catalog">
@@ -196,7 +196,7 @@ ${cards}
     </div>
   </section>
 
-  <section class="tc-compare">
+  <section class="tc-compare tc-band tc-gray">
     <div class="wrap">
       <h2>${T.compare}</h2>
       <div class="table-scroll">
@@ -246,7 +246,7 @@ function productPage(t, p) {
   const related = products.filter(o => o.id !== p.id && o.cat === p.cat).slice(0, 4);
 
   const body = `<main class="tc">
-  <div class="wrap prod">
+  <div class="tc-band tc-first"><div class="wrap prod">
     <nav class="crumbs" aria-label="breadcrumb"><a href="${t.catalog}">${T.back}</a> › <a href="${t.catalog}#katalog">${t.cats[p.cat]}</a> › <span>${esc(pname(p, en))}</span></nav>
 
     <div class="prod-top">
@@ -267,7 +267,9 @@ ${p.deposit != null ? `          <dt>${t.deposit}</dt><dd>${esc(money(p.deposit,
         <a href="#rezervace" class="btn btn-red">${T.bookCta}</a>
       </div>
     </div>
+  </div></div>
 
+  <div class="tc-band tc-gray"><div class="wrap">
     <div class="prod-detail">
       <div>
         <p class="prod-desc">${esc(d.desc)}</p>
@@ -279,21 +281,25 @@ ${p.deposit != null ? `          <dt>${t.deposit}</dt><dd>${esc(money(p.deposit,
         <dl class="spec">${Object.entries(specs).map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}${p.variants.length ? `<dt>${T.versions}</dt><dd>${esc(p.variants.join(', '))}</dd>` : ''}</dl>
       </div>
     </div>
+  </div></div>
 
+  <div class="tc-band"><div class="wrap">
     <section class="rental" id="rezervace">
       <h2>${T.bookTitle}</h2>
       <p class="rental-pick">${T.pick}</p>
       <div class="demo-note" id="demo-note" hidden></div>
       <div id="rental"></div>
     </section>
+  </div></div>
 
-${related.length ? `    <section class="related">
+${related.length ? `  <div class="tc-band tc-gray"><div class="wrap">
+    <section class="related">
       <h2>${T.related}</h2>
       <div class="prod-grid prod-grid-sm">
 ${related.map(o => `        <a class="prod-card" href="${t.page(o.id)}">${img(o, prefix, t, en)}<div class="prod-card-body"><small>${esc(o.brand)}</small><h3>${esc(pname(o, en))}</h3><div class="prod-price">${esc(priceShort(o, t, en))}</div></div></a>`).join('\n')}
       </div>
-    </section>` : ''}
-  </div>
+    </section>
+  </div></div>` : ''}
 </main>
 <script type="application/json" id="product">${JSON.stringify(data)}</script>`;
 

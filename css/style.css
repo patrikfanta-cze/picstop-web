@@ -558,3 +558,14 @@ footer .made a{margin:0;color:var(--white);text-decoration:underline;text-decora
 @media (prefers-reduced-motion:reduce){.rs-viewport{overflow-x:auto}}
 .reviews + .intro{padding-top:55px}
 @media (max-width:700px){.reviews + .intro{padding-top:36px}}
+
+/* test centre: alternating black / grey full-width bands like the home page */
+.tc{padding:120px 0 0}
+.tc .tc-band{padding:64px 0}
+.tc .tc-first{padding-top:0}
+.tc .tc-gray{background:var(--panel)}
+.tc-how,.tc-catalog,.tc-compare,.prod-detail,.rental,.related{margin-top:0}
+.tc-gray .steps-list li,.tc-gray .compare,.tc-gray .spec,.tc-gray .prod-card{background:var(--black)}
+.tc-gray .prod-card:hover{border-color:var(--red)}
+.tc-band:last-child{padding-bottom:90px}
+@media (max-width:700px){.tc{padding-top:100px}.tc .tc-band{padding:44px 0}.tc .tc-first{padding-top:0}}
