@@ -26,7 +26,7 @@ const L = {
     freeWeek: 'Zdarma na týden', from: 'od',
     demo: 'Ukázková data', demoNote: 'Ukázková data: cena a parametry tohoto produktu jsou zatím jen pro představu a čekají na potvrzení od PICSTOPu.',
     detail: 'Detail a rezervace',
-    footer: {id: 'IČ', city: 'Praha 6', complaints: ['reklamace.html', 'Reklamace'], privacy: ['ochrana-osobnich-udaju.html', 'Ochrana osobních údajů'], made: 'Web vytvořil', photos: 'Foto produktů: výrobci'},
+    footer: {id: 'IČ', city: 'Praha 6', complaints: ['reklamace.html', 'Reklamace'], privacy: ['ochrana-osobnich-udaju.html', 'Ochrana osobních údajů'], made: 'Web vytvořil', cta: 'Chcete takový web také?', photos: 'Foto produktů: výrobci'},
   },
   en: {
     lang: 'en', pre: 'en/', catalog: 'test-centre.html', page: id => `test-${id}.html`,
@@ -40,7 +40,7 @@ const L = {
     freeWeek: 'Free for a week', from: 'from',
     demo: 'Sample data', demoNote: 'Sample data: the price and details of this product are for illustration only and are waiting for confirmation from PICSTOP.',
     detail: 'Details and booking',
-    footer: {id: 'Company ID', city: 'Prague 6', complaints: ['complaints.html', 'Complaints'], privacy: ['privacy.html', 'Privacy policy'], made: 'Website by', photos: 'Product photos: manufacturers'},
+    footer: {id: 'Company ID', city: 'Prague 6', complaints: ['complaints.html', 'Complaints'], privacy: ['privacy.html', 'Privacy policy'], made: 'Website by', cta: 'Want a website like this?', photos: 'Product photos: manufacturers'},
   },
 };
 
@@ -109,7 +109,7 @@ ${body}
   <div class="wrap">
     <span>© <span id="y"></span> Zdeněk Oupic (PICSTOP) · ${t.footer.id} 07735600 · Na Lužci 226/10, 160 00 ${t.footer.city}<small class="credit">${t.footer.photos}</small></span>
     <span><a href="${t.footer.complaints[0]}">${t.footer.complaints[1]}</a><a href="${t.footer.privacy[0]}">${t.footer.privacy[1]}</a></span>
-    <p class="made">${t.footer.made} <a href="mailto:patrik.fanta@gmail.com">Patrik Fanta</a></p>
+    <p class="made">${t.footer.made} <a href="https://patrikfanta.cz/?ref=picstop" target="_blank" rel="noopener">Patrik Fanta</a> · <a href="https://patrikfanta.cz/?ref=picstop" target="_blank" rel="noopener">${t.footer.cta}</a></p>
   </div>
 </footer>
 
